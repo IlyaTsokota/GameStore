@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using GameStore.Data.Identity;
 using GameStore.Model;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Attribute = GameStore.Model.Attribute;
@@ -52,6 +50,20 @@ namespace GameStore.Data.ApplicationContext
         public void Commit()
         {
             SaveChanges();
+        }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<IdentityUser>().ToTable("Users");
+            modelBuilder.Entity<User>().ToTable("Users");
+
+            modelBuilder.Entity<IdentityRole>().ToTable("Roles");
+            modelBuilder.Entity<IdentityUserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<IdentityUserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserLogin>().ToTable("UserLogins");
+
+            modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
     }
 }
