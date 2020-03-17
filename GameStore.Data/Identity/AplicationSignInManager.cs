@@ -1,6 +1,5 @@
-﻿using System;
+﻿
 using GameStore.Model;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 

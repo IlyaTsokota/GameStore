@@ -73,10 +73,12 @@ namespace GameStore.Web
             builder.RegisterType<ApplicationUserStore>().As<IUserStore<User>>().InstancePerRequest();
             builder.RegisterType<ApplicationRoleStore>().As<IRoleStore<IdentityRole, string>>();
 
+            builder.RegisterType<EmailService>().As<IEmailService>().InstancePerRequest();
+            builder.RegisterType<SmsService>().As<ISmsService>().InstancePerRequest();
             builder.RegisterType<ApplicationRoleManager>().AsSelf().InstancePerRequest();
             builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
             builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
-        
+            builder.Register(c => HttpContext.Current.User.Identity.IsAuthenticated).InstancePerRequest();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().InstancePerRequest();
 
