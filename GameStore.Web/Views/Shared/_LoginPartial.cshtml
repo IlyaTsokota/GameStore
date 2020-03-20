@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <div class="btn-group navbar-right nav navbar-nav offset-1">
+        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            @User.Identity.GetUserName()
+        </button>
+        <ul class="dropdown-menu">
+
+            <li>@Html.ActionLink("Настройки", "Index", "Manage", null, htmlAttributes: new { title = "Manage", @class = "nav-link" })</li>
+            @if (User.IsInRole("admin"))
+            {
+                <li>  @Html.ActionLink("Админ панель", "Index", new { area = "Admin", controller = "Home" }, htmlAttributes: new { title = "Manage", @class = "nav-link" })</li>
+            }
+            <li class="dropdown-divider"></li>
+            <li>
+                @using (Html.BeginForm("LogOut", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <ul style="list-style-type:none;">
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()" style="text-decoration: none; color: black;">Выйти</a></li>
+                    </ul>
+
+                }
+            </li>
+        </ul>
+    </div>
+
+
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right offset-1">
+
+        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
+        <li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    </ul>
+}
+

@@ -1,0 +1,72 @@
+﻿@model GameStore.Web.ViewModels.AccountViewModel.RegisterViewModel
+
+@{
+    ViewBag.Title = "Регистрация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 " })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.LastName, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 " })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FirstName, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.MiddleName, new { @class = "col-md-2 " })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.MiddleName, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 " })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", placeholder = "+380501245789" })
+            @Html.ValidationMessageFor(m => m.Phone, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 " })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "email@example.com" })
+            @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 " })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Password, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PasswordConfirm, new { @class = "col-md-2 " })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.PasswordConfirm, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.PasswordConfirm, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class=" col offset-md-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Зарегистрироваться" />
+        </div>
+    </div>
+}

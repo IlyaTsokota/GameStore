@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using Microsoft.Owin.Security.Cookies;
 
 
 [assembly: OwinStartup(typeof(GameStore.Web.Startup))]
@@ -24,6 +23,8 @@ namespace GameStore.Web
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security.DataProtection;
     using Owin;
+    using Microsoft.Owin.Security.Cookies;
+    using System.Net.Http;
     public partial class Startup
     {
         public void Configuration(IAppBuilder app)
@@ -78,7 +79,7 @@ namespace GameStore.Web
             builder.RegisterType<ApplicationRoleManager>().AsSelf().InstancePerRequest();
             builder.RegisterType<ApplicationUserManager>().AsSelf().InstancePerRequest();
             builder.RegisterType<ApplicationSignInManager>().AsSelf().InstancePerRequest();
-            builder.Register(c => HttpContext.Current.User.Identity.IsAuthenticated).InstancePerRequest();
+            builder.Register(c => HttpContext.Current.GetOwinContext().Authentication).InstancePerRequest();
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<DatabaseFactory>().As<IDatabaseFactory>().InstancePerRequest();
 
