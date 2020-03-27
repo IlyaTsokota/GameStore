@@ -19,7 +19,7 @@ namespace GameStore.Data.Identity
             _dataProtectionProvider = dataProtectionProvider;
             EmailService = emailService;
             SmsService = smsService;
-            Create(new OwinContext());
+            Create();
         }
 
         public ApplicationUserManager(IUserStore<User> store)
@@ -35,30 +35,8 @@ namespace GameStore.Data.Identity
                 : Users;
             return users.OrderBy(x => x.LastName).ThenBy(x => x.FirstName).ToList();
         }
-        public ApplicationUserManager Create(IOwinContext context)
+       private void  Create()
         {
-            var manager = new ApplicationUserManager(new UserStore<User>(context.Get<ApplicationContext.ApplicationContext>()));
-            // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<User>(manager)
-            {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
-            };
-
-            // Configure validation logic for passwords
-            manager.PasswordValidator = new PasswordValidator
-            {
-                RequiredLength = 6,
-                RequireNonLetterOrDigit = false,
-                RequireDigit = true,
-                RequireLowercase = true,
-                RequireUppercase = true,
-            };
-
-            // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
             RegisterTwoFactorProvider(
                 "Смс",
@@ -80,7 +58,6 @@ namespace GameStore.Data.Identity
                 var dataProtector = _dataProtectionProvider.Create("ASP.NET Identity");
                 UserTokenProvider = new DataProtectorTokenProvider<User, string>(dataProtector);
             }
-            return manager;
         }
     }
 }

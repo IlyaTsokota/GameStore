@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace GameStore.Data.ApplicationContext
 {
-    public class ApplicationContextInitializer : CreateDatabaseIfNotExists<ApplicationContext>
+    public class ApplicationContextInitializer : DropCreateDatabaseAlways<ApplicationContext>
     {
         protected override void Seed(ApplicationContext context)
         {
@@ -35,8 +35,14 @@ namespace GameStore.Data.ApplicationContext
 
             var store = new UserStore<User>(context);
             var manager = new UserManager<User>(store);
-            var user = new User {UserName = "Admin", Email = "admin@game.store"};
-            manager.Create(user, "Admin");
+            var admin = new User { Email = "gamestore@gmail.com", UserName = "gamestore@gmail.com", FirstName = "Илья", MiddleName = "Цокота", LastName = "Олегович", PhoneNumber = "+380990482560" };
+            string password = "13Avtobusus";
+            var result = manager.Create(admin, password);
+            if (result.Succeeded)
+            {
+                manager.AddToRole(admin.Id, "Admin");
+            }
+            base.Seed(context);
         }
     }
 }

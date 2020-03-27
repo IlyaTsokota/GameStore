@@ -10,7 +10,7 @@ namespace GameStore.Data.ApplicationContext
 {
     public sealed class ApplicationContext : IdentityDbContext<User>
     {
-        public ApplicationContext() : base("name=GameStore")
+        public ApplicationContext() : base("GameStore")
         {
         }
 
@@ -37,13 +37,11 @@ namespace GameStore.Data.ApplicationContext
 
         public IDbSet<Review> ProductReviews { get; set; }
 
-        public IDbSet<Supply> ProductSupplies { get; set; }
+        public IDbSet<SupplyProduct> SupplyProducts { get; set; }
 
         public IDbSet<Supplier> Suppliers { get; set; }
 
         public IDbSet<Supply> Supplies { get; set; }
-
-        public IDbSet<User> User { get; set; }
 
         public IDbSet<Log> Logs { get; set; }
 
