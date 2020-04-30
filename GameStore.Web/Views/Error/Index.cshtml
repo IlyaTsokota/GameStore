@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <div class="row justify-content-md-center">
+
+        <img src="~/images/500.png" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="w-100"></div>
+        <h2 class="text-center text-danger">Неизвестная ошибка</h2>
+        <div class="w-100"></div>
+        <p class="text-danger">При выполнении операции произошла непредвиденная ошибка. Сообщите администратору приложенную ниже информацию.</p>
+        <div class="w-100"></div>
+        <a href='javascript:history.go(-1)' class="btn btn-outline-info">Вернуться назад</a>
+    </div>
+</div>
+
+@if (Model != null && HttpContext.Current.IsDebuggingEnabled)
+{
+    <div>
+        <p>
+            <b>Controller:</b> @Model.ControllerName<br />
+            <b>Action:</b> @Model.ActionName<br />
+            <b>Exception:</b> @Model.Exception.Message
+        </p>
+        <p><b>StackTrace:</b></p>
+        <div style="overflow: scroll">
+            <pre>@Model.Exception.StackTrace</pre>
+        </div>
+    </div>
+}

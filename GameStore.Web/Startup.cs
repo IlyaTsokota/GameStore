@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 
-
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]
 [assembly: OwinStartup(typeof(GameStore.Web.Startup))]
 
 namespace GameStore.Web
@@ -20,11 +20,12 @@ namespace GameStore.Web
     using GameStore.Data.Infrastructure;
     using GameStore.Data.Repositories;
     using GameStore.Model;
+    using GameStore.Service;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
     using Microsoft.Owin.Security.DataProtection;
     using Owin;
-    public partial class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
@@ -84,6 +85,8 @@ namespace GameStore.Web
 
             builder.RegisterAssemblyTypes(typeof(ProductRepository).Assembly).Where(t => t.Name.EndsWith("Repository"))
                 .AsImplementedInterfaces().InstancePerRequest();
+            builder.RegisterAssemblyTypes(typeof(ProductService).Assembly).Where(t => t.Name.EndsWith("Service"))
+            .AsImplementedInterfaces().InstancePerRequest();
 
             builder.RegisterControllers(Assembly.GetExecutingAssembly());
             builder.RegisterFilterProvider();

@@ -1,45 +1,14 @@
-﻿@model IEnumerable<GameStore.Web.Areas.Admin.ViewModels.LogViewModels.IndexLogViewModel>
+﻿@model GameStore.Web.Areas.Admin.ViewModels.LogViewModels.IndexLogViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Логи";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex justify-content-between align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+</div>
+@using (Ajax.BeginForm("GetLogs", "Log", new AjaxOptions { UpdateTargetId = "results" }))
+{
+    <div id="results">@Html.Partial("_Logs", Model)</div>
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Level)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Level)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
-</table>

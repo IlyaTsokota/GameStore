@@ -1,0 +1,57 @@
+﻿@model GameStore.Web.Areas.Admin.ViewModels.ProductViewModel.IndexProductViewModel
+@using GameStore.Web.Helpers
+
+
+<table class="table table-hover ">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Products.FirstOrDefault().Name)</th>
+
+
+            <th>@Html.DisplayNameFor(model => model.Products.FirstOrDefault().Price)</th>
+            <th>@Html.DisplayNameFor(model => model.Products.FirstOrDefault().Quantity)</th>
+
+            <th class="text-right">Действия</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Name, "Index", "Product", new { Area = string.Empty, id = item.ProductId }, null)
+            </td>
+            <td>
+
+                @Html.DisplayFor(modelItem => item.Price)
+                @if (item.OldPrice != 0)
+                {
+                    <span class="text-danger old-price">@Html.DisplayFor(modelItem => item.OldPrice)</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td class="text-right">
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary my-1" })
+                @Html.ActionLink("Подробнее", "Index", "Product", new { Area = "", id = item.ProductId }, new { @class = "btn btn-info" })
+                @if (item.IsDeleted)
+                {
+                    @Html.ActionLink("Восстановить", "Restore", "Product", new { id = item.ProductId }, htmlAttributes: new { @class = "btn btn-warning" })
+                }
+                else
+                {
+                    @Html.ActionLink("Удалить", "Delete", "Product", new { id = item.ProductId }, htmlAttributes: new { @class = "btn btn-danger" })
+                }
+
+            </td>
+        </tr>
+        }
+    </tbody>
+
+
+</table>
+<div>
+    @Html.PaginationAjax(Model.Pager)
+</div>

@@ -1,19 +1,20 @@
-﻿@model List<GameStore.Web.Areas.Admin.ViewModels.LogViewModels.LogViewModel>
-<table class="table table-hover table-responsive">
+﻿@model GameStore.Web.Areas.Admin.ViewModels.LogViewModels.IndexLogViewModel
+@using GameStore.Web.Helpers
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Message)</th>
+            <th>@Html.DisplayNameFor(model => model.Logs.FirstOrDefault().Message)</th>
 
 
-            <th>@Html.DisplayNameFor(model => model.Level)</th>
+            <th>@Html.DisplayNameFor(model => model.Logs.FirstOrDefault().Level)</th>
 
 
-            <th>@Html.DisplayNameFor(model => model.Date)</th>
+            <th>@Html.DisplayNameFor(model => model.Logs.FirstOrDefault().Date)</th>
 
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Logs)
         {
             <tr>
                 <td>@item.Message</td>
@@ -26,8 +27,9 @@
         }
     </tbody>
 
-
-
+   
 </table>
-
-
+<div>
+    @Html.PaginationAjax(Model.Pager)
+</div>
+ 

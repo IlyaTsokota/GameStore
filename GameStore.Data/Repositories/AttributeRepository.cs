@@ -1,7 +1,6 @@
 ﻿
 using GameStore.Data.Infrastructure;
-
-using Attribute = System.Attribute;
+using GameStore.Model;
 
 namespace GameStore.Data.Repositories
 {

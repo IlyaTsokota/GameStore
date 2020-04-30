@@ -1,0 +1,36 @@
+﻿
+
+
+@model GameStore.Web.Areas.Admin.ViewModels.ProductImageViewModel.AddImageViewModel
+@{
+    ViewBag.Title = "Загрузить изображения";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm("AddImages", "ProductImage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.ProductId)
+
+    <div>
+        @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
+
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.TextBoxFor(x => x.PostedFiles, new { type = "file", @class = "form-control upload__image", accept = "image/*", multiple = true })
+                @Html.ValidationMessageFor(x => x.PostedFiles, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+                @Html.ActionLink("Назад", "Index", new { productId = Model.ProductId }, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}

@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,9 +42,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeService.cs" />
+    <Compile Include="AttributeValueService.cs" />
+    <Compile Include="CategoryService.cs" />
+    <Compile Include="IAttributeService.cs" />
+    <Compile Include="IAttributeValueService.cs" />
+    <Compile Include="ICategoryService.cs" />
+    <Compile Include="ILogService.cs" />
+    <Compile Include="IOrderService.cs" />
+    <Compile Include="IOrderStatusService.cs" />
+    <Compile Include="IProductImageService.cs" />
     <Compile Include="IProductService.cs" />
+    <Compile Include="IReviewService.cs" />
+    <Compile Include="ISupplierService.cs" />
+    <Compile Include="ISupplyService.cs" />
+    <Compile Include="LogService.cs" />
+    <Compile Include="OrderService.cs" />
+    <Compile Include="OrderStatusService.cs" />
+    <Compile Include="ProductImageService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReviewService.cs" />
+    <Compile Include="SupplierService.cs" />
+    <Compile Include="SupplyService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameStore.Data\GameStore.Data.csproj">
