@@ -1,0 +1,33 @@
+﻿@model List<GameStore.Web.Areas.Admin.ViewModels.LogViewModels.LogViewModel>
+<table class="table table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Message)</th>
+
+
+            <th>@Html.DisplayNameFor(model => model.Level)</th>
+
+
+            <th>@Html.DisplayNameFor(model => model.Date)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Message</td>
+
+                <td>@item.Level</td>
+                <td>
+                    @item.Date.ToString("dd.MM.yyyy HH:mm")
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+
+</table>
+
+
