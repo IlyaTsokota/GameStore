@@ -1,0 +1,21 @@
+﻿@model GameStore.Web.Areas.Admin.ViewModels.SupplyViewModels.IndexSupplyViewModel
+@{
+    ViewBag.Title = "Поставки";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex justify-content-between align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Добавить", "Create", "Supply", htmlAttributes: new { @class = "btn btn-primary" })
+</div>
+@using (Ajax.BeginForm("GetSupplies", new AjaxOptions { UpdateTargetId = "supplies" }))
+{
+    <div class="d-flex align-items-center ">
+
+        <div class="form-group col-md-4">
+            @Html.DropDownList("supplierId", Model.Suppliers, "Все", new { @class = "form-control", id = "ajaxSelectSubmit" })
+        </div>
+    </div>
+    <div id="supplies">
+        @Html.Partial("_Supplies", Model)
+    </div>
+}

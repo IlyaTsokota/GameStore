@@ -1,0 +1,43 @@
+﻿
+@model GameStore.Web.Areas.Admin.ViewModels.SupplyViewModels.IndexSupplyViewModel
+@using GameStore.Web.Helpers
+
+
+<table class="table table-hover ">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Supplies.FirstOrDefault().Supplier.Name)</th>
+
+
+            <th>@Html.DisplayNameFor(model => model.Supplies.FirstOrDefault().SupplyDate)</th>
+
+            <th class="text-right">Действия</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Supplies)
+        {
+            <tr>
+                
+                <td>
+
+                    @item.Supplier.Name
+                </td>
+                <td>
+                    @item.SupplyDate.ToString("u")
+                </td>
+                <td class="text-right">
+          
+                    @Html.ActionLink("Подробнее", "Details", "Supply", new { id = item.SupplyId }, new { @class = "btn btn-info" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+<div>
+    @Html.PaginationAjax(Model.Pager)
+</div>

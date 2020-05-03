@@ -5,6 +5,7 @@ using GameStore.Web.Areas.Admin.ViewModels.AttributeViewModels;
 using GameStore.Web.Areas.Admin.ViewModels.CategoryViewModels;
 using GameStore.Web.Areas.Admin.ViewModels.ProductViewModel;
 using GameStore.Web.Areas.Admin.ViewModels.SupplierViewModels;
+using GameStore.Web.Areas.Admin.ViewModels.SupplyViewModels;
 using GameStore.Web.Extensions;
 using System.Linq;
 
@@ -29,6 +30,9 @@ namespace GameStore.Web.Mappings
               opt => opt.MapFrom(src => src.Images
                   .Select(x => new ProductImage { Image = x.ToByteArray(), ProductId = src.ProductId })));
             CreateMap<EditProductViewModel, Product>();
+
+            CreateMap<SupplyProductViewModel, SupplyProduct>();
+            CreateMap<AddSupplyViewModel, Supply>();
         }
     }
 }

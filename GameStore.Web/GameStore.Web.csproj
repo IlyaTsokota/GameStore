@@ -206,6 +206,10 @@
     <Compile Include="Areas\Admin\ViewModels\SupplierViewModels\DetailsSupplierViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\SupplierViewModels\IndexSupplierViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\SupplierViewModels\SupplierViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\SupplyViewModels\AddSupplyViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\SupplyViewModels\DetailsSupplyViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\SupplyViewModels\IndexSupplyViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\SupplyViewModels\SupplyProductViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\SupplyViewModels\SupplyViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -294,6 +298,10 @@
     <Content Include="Areas\Admin\Views\AttributeValue\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\ProductImage\AddImages.cshtml" />
     <Content Include="Areas\Admin\Views\ProductImage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Supply\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Supply\_Supplies.cshtml" />
+    <Content Include="Areas\Admin\Views\Supply\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Supply\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -432,7 +440,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Order\" />
-    <Folder Include="Areas\Admin\Views\Supply\" />
     <Folder Include="Areas\Admin\Views\User\" />
   </ItemGroup>
   <ItemGroup>
