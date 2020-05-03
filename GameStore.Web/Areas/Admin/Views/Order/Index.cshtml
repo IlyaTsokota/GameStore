@@ -1,0 +1,29 @@
+﻿
+@model GameStore.Web.Areas.Admin.ViewModels.OrderViewModels.IndexOrderViewModel
+
+@{
+    ViewBag.Title = "Заказы";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Ajax.BeginForm("GetOrders", new AjaxOptions { UpdateTargetId = "orders" }))
+{
+    <div class="form-group d-flex align-items-center">
+        <div class="form-check col col-sm-6">
+            <label class="form-check-label">
+                <input class="form-check-input" name="OnlyMyOrders" type="checkbox" id="AjaxChangeSubmit" value="true" />
+                Только принятые мною заказы
+            </label>
+        </div>
+        @Html.LabelFor(x => x.OrderStatusId, "Статус", new { @class = "col text-right" })
+        <div class="col-10 col-sm-6 col-md-4 col-lg-3">
+            @Html.DropDownListFor(model => model.OrderStatusId, Model.OrderStatuses, "Все", new { @class = "form-control", id = "ajaxSelectSubmit" })
+        </div>
+    </div>
+
+    <div id="orders">
+        @Html.Partial("_Orders", Model)
+    </div>
+}

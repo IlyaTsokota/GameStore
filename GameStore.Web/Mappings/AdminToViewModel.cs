@@ -4,6 +4,7 @@ using GameStore.Web.Areas.Admin.ViewModels.AttributeValueViewModels;
 using GameStore.Web.Areas.Admin.ViewModels.AttributeViewModels;
 using GameStore.Web.Areas.Admin.ViewModels.CategoryViewModels;
 using GameStore.Web.Areas.Admin.ViewModels.LogViewModels;
+using GameStore.Web.Areas.Admin.ViewModels.OrderViewModels;
 using GameStore.Web.Areas.Admin.ViewModels.ProductImageViewModel;
 using GameStore.Web.Areas.Admin.ViewModels.ProductViewModel;
 using GameStore.Web.Areas.Admin.ViewModels.SupplierViewModels;
@@ -39,6 +40,27 @@ namespace GameStore.Web.Mappings
             CreateMap<Supply, DetailsSupplyViewModel>().ForMember(
                 m => m.SupplyProductViewModels,
                 opt => opt.MapFrom(p => p.SupplyProducts.Select(Mapper.Map<SupplyProduct, SupplyProductViewModel>)));
+            CreateMap<Order, OrderViewModel>().ForMember(
+                    m => m.FullName,
+                    opt => opt.MapFrom(src => $"{src.LastName} {src.FirstName[0]}.{src.MiddleName[0]}."));
+            CreateMap<Order, DetailsOrderViewModel>()
+                .ForMember(
+                    m => m.FullName,
+                    opt => opt.MapFrom(src => $"{src.LastName} {src.FirstName} {src.MiddleName}")).ForMember(
+                    m => m.Manager,
+                    opt => opt.MapFrom(
+                        src => $"{src.Manager.LastName} {src.Manager.FirstName[0]}.{src.Manager.MiddleName[0]}."))
+                .ForMember(
+                    m => m.OrderDetails,
+                    opt => opt.MapFrom(
+                        src => src.OrderDetails.Select(Mapper.Map<OrderDetails, OrderDetailsViewModel>).ToList()));
+            CreateMap<OrderDetails, OrderDetailsViewModel>().ForMember(
+              m => m.QuantityInCart,
+              opt => opt.MapFrom(src => src.Quantity)).ForMember(
+              m => m.QuantityInStock,
+              opt => opt.MapFrom(src => src.Product.Quantity)).ForMember(
+              m => m.Name,
+              opt => opt.MapFrom(src => src.Product.Name));
         }
     }
 }

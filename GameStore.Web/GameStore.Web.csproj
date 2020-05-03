@@ -197,6 +197,10 @@
     <Compile Include="Areas\Admin\ViewModels\CategoryViewModels\IndexCategoryViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\LogViewModels\IndexLogViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\LogViewModels\LogViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\OrderViewModels\DetailsOrderViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\OrderViewModels\IndexOrderViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\OrderViewModels\OrderDetailsViewModel.cs" />
+    <Compile Include="Areas\Admin\ViewModels\OrderViewModels\OrderViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ProductImageViewModel\AddImageViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ProductImageViewModel\ProductImageViewModel.cs" />
     <Compile Include="Areas\Admin\ViewModels\ProductViewModel\CreateProductViewModel.cs" />
@@ -302,6 +306,9 @@
     <Content Include="Areas\Admin\Views\Supply\_Supplies.cshtml" />
     <Content Include="Areas\Admin\Views\Supply\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Supply\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\_Orders.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\admin.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -439,7 +446,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Views\Order\" />
     <Folder Include="Areas\Admin\Views\User\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,50 @@
+﻿
+@using GameStore.Web.Helpers
+@model GameStore.Web.Areas.Admin.ViewModels.OrderViewModels.IndexOrderViewModel
+<table class="table table-hover">
+    <tr>
+        <th>
+            №
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => modelItem.Orders.FirstOrDefault().FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => modelItem.Orders.FirstOrDefault().Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => modelItem.Orders.FirstOrDefault().OrderStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(modelItem => modelItem.Orders.FirstOrDefault().OrderDate)
+        </th>
+        <th class="text-right">Действие</th>
+    </tr>
+
+    @foreach (var item in Model.Orders)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderId)
+            </td>
+            <td>
+                @Html.ActionLink(item.FullName, "Details", "Customer", new { id = item.CustomerId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderStatus.Name)
+            </td>
+            <td>
+                @item.OrderDate.ToString("dd.MM.yyyy HH:mm")
+            </td>
+            <td class="text-right">
+                @Html.ActionLink("Подробности", "Details", "Order", new { id = @item.OrderId }, new { @class = "btn btn-info" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.PaginationAjax(Model.Pager)
