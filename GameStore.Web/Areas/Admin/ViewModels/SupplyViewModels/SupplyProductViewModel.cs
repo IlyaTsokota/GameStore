@@ -15,6 +15,5 @@ namespace GameStore.Web.Areas.Admin.ViewModels.SupplyViewModels
         [Display(Name = "Цена")]
         public int Price { get; set; }
 
-        public ProductViewModel.ProductViewModel Product { get; set; }
     }
 }

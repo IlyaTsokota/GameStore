@@ -1,0 +1,39 @@
+﻿@model List<GameStore.Web.ViewModels.ProductViewModels.ProductViewModel>
+
+ 
+
+
+        <div class="slider slick-slider ">
+            @foreach (var item in Model)
+            {
+                if (!item.IsDeleted && item.Quantity != 0)
+                {
+                    <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                        <div class="slick-slide">
+                            <div class="card mr-auto">
+                                <img class="card-img img-product" src="data:image/jpeg;base64, @Convert.ToBase64String(item.Images.FirstOrDefault().Image)" alt="@item.Name">
+                                <div class="card-img-overlay d-flex justify-content-end">
+                                    <a href="#" class="card-link text-danger like">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">@item.Name</h4>
+                                    <div class="buy d-flex justify-content-around align-items-center">
+                                        <div class="price text-success">
+                                            <h5 class="mt-4">@item.Price грн</h5>
+                                            @if (item.OldPrice != 0 && item.OldPrice != null)
+                                            {
+                                                <p class="old-price text-danger" style="text-decoration:line-through">@item.OldPrice грн</p>
+                                            }
+                                        </div>
+                                        <a href="#" class="btn btn-danger mt-3"><i class="fa fa-shopping-cart"></i>В корзину</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+ 

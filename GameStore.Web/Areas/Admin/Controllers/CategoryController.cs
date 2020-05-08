@@ -58,7 +58,7 @@ namespace GameStore.Web.Areas.Admin.Controllers
             }
             _categoryService.CreateCategory(category);
             Logger.Log.Info($"{User.Identity.Name} создал новую категорию {model.Name}");
-            return RedirectToAction("Index", "Attribute", new { id = category.CategoryId });
+            return RedirectToAction("Index", "Attribute", new { categoryId = category.CategoryId });
         }
         
         [HttpGet]

@@ -1,39 +1,35 @@
 ﻿
-@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
+@if (!Request.IsAuthenticated)
 {
-    <div class="btn-group navbar-right nav navbar-nav offset-1">
-        <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            @User.Identity.GetUserName()
-        </button>
-        <ul class="dropdown-menu">
-
-            <li>@Html.ActionLink("Настройки", "Index", "Manage", null, htmlAttributes: new { title = "Manage", @class = "nav-link" })</li>
-            @if (User.IsInRole("admin"))
-            {
-                <li>  @Html.ActionLink("Админ панель", "Index", new { area = "Admin", controller = "Home" }, htmlAttributes: new { title = "Manage", @class = "nav-link" })</li>
-            }
-            <li class="dropdown-divider"></li>
-            <li>
+    <ul class="navbar-nav list-info">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-user"></i>
+                Мой аккаунт
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-default"
+                 aria-labelledby="navbarDropdownMenuLink-333">
+                <a class="dropdown-item" href="@Url.Action("Index", "Profile")">Профиль</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Админ панель", "Index", new { area = "Admin", controller = "Order" }, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
+                }
                 @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
                 {
                     @Html.AntiForgeryToken()
-                    <ul style="list-style-type:none;">
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()" style="text-decoration: none; color: black;">Выйти</a></li>
-                    </ul>
-
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="dropdown-item">Выйти</a>
                 }
-            </li>
-        </ul>
-    </div>
-
+            </div>
+        </li>
+    </ul>
 
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right offset-1">
-
-        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "nav-link" })</li>
-        <li>@Html.ActionLink("Войти", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })</li>
+    <ul class="navbar-nav list-info">
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Action("Login", "Account")"><i class="fa fa-user mr-1"></i>Вход в личный кабинет</a>
+        </li>
     </ul>
 }

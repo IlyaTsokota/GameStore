@@ -36,7 +36,9 @@ namespace GameStore.Web.Mappings
 
             CreateMap<Supplier, DetailsSupplierViewModel>();
             CreateMap<Supply, SupplyViewModel>();
-            CreateMap<SupplyProduct, SupplyProductViewModel>();
+            CreateMap<SupplyProduct, SupplyProductViewModel>().ForMember(
+                m=>m.Name,
+                opt=>opt.MapFrom(p=>p.Product.Name));
             CreateMap<Supply, DetailsSupplyViewModel>().ForMember(
                 m => m.SupplyProductViewModels,
                 opt => opt.MapFrom(p => p.SupplyProducts.Select(Mapper.Map<SupplyProduct, SupplyProductViewModel>)));

@@ -20,12 +20,24 @@ namespace GameStore.Web
                         "~/Scripts/modernizr-*"));
             bundles.Add(new ScriptBundle("~/bundles/adminJs").Include(
                "~/Scripts/admin.js"));
+            bundles.Add(new ScriptBundle("~/bundles/mainJs").Include(
+              "~/Scripts/main.js"));
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+           
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                    "~/Scripts/bootstrap.js"));
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/main/css").Include(
+                 "~/Content/font-awesome.css",
+                      "~/Content/bootstrap.css",
+                      "~/Content/main.css"));
+
+          
         }
     }
 }

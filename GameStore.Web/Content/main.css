@@ -1,71 +1,136 @@
-﻿.login-block {
-    background-color: #fff;
-    padding: 60px;
-    -webkit-box-shadow: 0 3px 50px 0 rgba(0,0,0,.1);
-    box-shadow: 0 3px 50px 0 rgba(0,0,0,.1);
-    text-align: center;
-    border-radius: 5px
+﻿@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+.header-top-wrapper {
+    background-color:#f0f0f5;
 }
 
-.login-block h1, .login-block h6 {
-    font-family: Open Sans,sans-serif;
-    color: #96a2b2;
-    letter-spacing: 1px
+.list-info li a{
+    color: black;
+}
+.header-middle-wrapper{
+    background-color:#ffffff;
+}
+.logo{
+    color:black;
+}
+.active-pink-2 input[type=text]:focus:not([readonly]) {
+    border-bottom: 1px solid #f48fb1;
+    box-shadow: 0 1px 0 0 #f48fb1;
 }
 
-.login-block h1 {
-    font-size: 22px;
-    margin-bottom: 60px;
-    margin-top: 40px
+.active-pink input[type=text] {
+    border-bottom: 1px solid #f48fb1;
+    box-shadow: 0 1px 0 0 #f48fb1;
+}
+.link-cart{
+    text-decoration:none;
+}
+    .link-cart:hover {
+        text-decoration: none;
+        color: #808080;
+    }
+/* adds some margin below the link sets  */
+.navbar .dropdown-menu div[class*="col"] {
+    margin-bottom: 1rem;
 }
 
-
-
-.login-block .input-group-addon {
-    color: #29aafe;
-    font-size: 19px;
-    opacity: .5
+.navbar .dropdown-menu {
+    border: none;
+    background-color: #0060c8 !important;
 }
 
-.login-block .btn-block {
-    margin-top: 30px;
-    padding: 15px;
-    background: #29aafe;
-    border-color: #29aafe;
+/* breakpoint and up - mega dropdown styles */
+@media screen and (min-width: 992px) {
+
+    /* remove the padding from the navbar so the dropdown hover state is not broken */
+    .navbar {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+
+        /* remove the padding from the nav-item and add some margin to give some breathing room on hovers */
+        .navbar .nav-item {
+            padding: .5rem .5rem;
+            margin: 0 .25rem;
+        }
+
+        /* makes the dropdown full width  */
+        .navbar .dropdown {
+            position: static;
+        }
+
+        .navbar .dropdown-menu {
+            width: 100%;
+            left: 0;
+            right: 0;
+            /*  height of nav-item  */
+            top: 45px;
+        }
+
+        /* shows the dropdown menu on hover */
+        .navbar .dropdown:hover .dropdown-menu, .navbar .dropdown .dropdown-menu:hover {
+            display: block !important;
+        }
+
+        .navbar .dropdown-menu {
+            border: 1px solid rgba(0, 0, 0, .15);
+            background-color: #fff;
+        }
 }
 
-.login-block .hr-xs {
-    margin-top: 5px;
-    margin-bottom: 5px
-}
-.social-icons a:active, .social-icons a:focus, .social-icons a:hover {
-    color: #fff;
-    background-color: #29aafe
-}
-
-.social-icons.size-sm a {
-    line-height: 34px;
-    height: 34px;
-    width: 34px;
-    font-size: 14px
+.nav.nav-tabs {
+    float: left;
+    display: block;
+    margin-right: 20px;
+    border-bottom: 0;
+    border-right: 1px solid #ddd;
+    padding-right: 15px;
 }
 
-.social-icons a.facebook:hover {
-    background-color: #3b5998
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+    background: #ccc;
 }
 
-.social-icons a.rss:hover {
-    background-color: #f26522
+    .nav-tabs .nav-link.active {
+        color: #495057;
+        background-color: #007bff !important;
+        border-color: transparent !important;
+    }
+
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: 0rem !important;
+    border-top-right-radius: 0rem !important;
 }
 
-.social-icons a.google-plus:hover {
-    background-color: #dd4b39
+.tab-content > .active {
+    display: block;
+    background: #007bff;
+    min-height: 165px;
 }
 
-.social-icons a.twitter:hover {
-    background-color: #00aced
+.nav.nav-tabs {
+    float: left;
+    display: block;
+    margin-right: 20px;
+    border-bottom: 0;
+    border-right: 1px solid transparent;
+    padding-right: 15px;
 }
 
-.social-icons a.linkedin:hover {
-    background-color: #007bb6
+.img-product{
+    height:250px;
+    width:300px;
+}
+
+.bg-gray {
+    background-color: #d3d3d3;
+}
+.slick-prev{
+    margin-left: 10px;
+}
+.slick-next{
+    margin-right:10px;
 }

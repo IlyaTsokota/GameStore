@@ -1,4 +1,5 @@
-﻿html {
+﻿
+html {
     position: relative;
     min-height: 100%;
 }
@@ -70,3 +71,6 @@
     display: block !important;
     /* При навидении на div в .container показать крестик */
 }
+
+
+/*Main pages site*/
