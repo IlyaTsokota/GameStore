@@ -1,0 +1,49 @@
+﻿@model List<GameStore.Web.ViewModels.WishViewModels.WishViewModel>
+@{
+    ViewBag.Title = "Список желаний";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 bg-light radius mt-5 mb-3">
+            @if (Model == null)
+            {
+                <h2 class="text-center">Список желаний пуст!</h2>
+                <div class="text-right mb-3">
+                    <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
+                </div>
+            }
+            else
+            {
+
+
+                <h2 class="text-center">Ваш список желаний</h2>
+                <table class="table table-hover cart-page">
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td><span class="p-name">@Html.ActionLink(item.Product.Name, "Details", "Products", new { productId = item.ProductId })</span> </td>
+                                <td><span class="p-name">@item.Product.Price.ToString("# грн")</span> </td>
+                                <td>
+                                    <img class="img-fluid img-wish" src="data:image/jpeg;base64, @Convert.ToBase64String(item.Product.Images.FirstOrDefault().Image)" alt="@item.Product.Name">
+                                </td>
+                                <td class="text-right"><a href="@Url.Action("Delete","Wish", new { wishId = item.WishId})"><h1>&times;</h1></a></td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+                <div class="text-right mb-3">
+
+
+                    <a class="btn btn-danger" href="@Url.Action("Clear", "Wish")">Очистить список желаний</a>
+                    <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

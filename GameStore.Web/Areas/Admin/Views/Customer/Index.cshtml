@@ -1,0 +1,23 @@
+﻿
+@model GameStore.Web.Areas.Admin.ViewModels.UserViewModels.IndexUserViewModel
+
+@{
+    ViewBag.Title = "Пользователи";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+    <div class="d-flex justify-content-between align-items-center my-3">
+        <h2>@ViewBag.Title</h2>
+        </div>
+
+        @using (Ajax.BeginForm("GetUsers", new AjaxOptions { UpdateTargetId = "customers" }))
+        {
+            <div class="d-flex">
+                <label class="form-check-label pl-3">
+                    <input class="form-check-input" name="onlyBlocked" type="checkbox" id="AjaxChangeSubmit" value="true" />
+                    Только заблокированные
+                </label>
+            </div>
+            <div id="customers">
+                @Html.Partial("_Customers", Model)
+            </div>
+        }
