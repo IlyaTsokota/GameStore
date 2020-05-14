@@ -1,21 +1,17 @@
 ﻿@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
-
 .header-top-wrapper {
-    background-color: #f0f0f5;
+    background-color:#f0f0f5;
 }
 
-.list-info li a {
+.list-info li a{
     color: black;
 }
-
-.header-middle-wrapper {
-    background-color: #ffffff;
+.header-middle-wrapper{
+    background-color:#ffffff;
 }
-
-.logo {
-    color: black;
+.logo{
+    color:black;
 }
-
 .active-pink-2 input[type=text]:focus:not([readonly]) {
     border-bottom: 1px solid #f48fb1;
     box-shadow: 0 1px 0 0 #f48fb1;
@@ -25,11 +21,9 @@
     border-bottom: 1px solid #f48fb1;
     box-shadow: 0 1px 0 0 #f48fb1;
 }
-
-.link-cart {
-    text-decoration: none;
+.link-cart{
+    text-decoration:none;
 }
-
     .link-cart:hover {
         text-decoration: none;
         color: #808080;
@@ -126,44 +120,17 @@
     padding-right: 15px;
 }
 
-.img-product {
-    height: 250px;
-    width: 300px;
+.img-product{
+    height:250px;
+    width:300px;
 }
 
 .bg-gray {
-    background-color: #93a0bb;
+    background-color: #d3d3d3;
 }
-
-.slick-prev {
+.slick-prev{
     margin-left: 10px;
 }
-
-.slick-next {
-    margin-right: 10px;
+.slick-next{
+    margin-right:10px;
 }
-
-.mdb-color {
-    background-color: #43516e;
-}
-
-.circle-link {
-    border: 1px solid white;
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
-}
-
-    .circle-link:hover {
-        opacity: 0.5;
-    }
-
-.link-decoration, .link-decoration:hover {
-    text-decoration: none;
-    color:white;
-}
-
-.link-decoration:hover{
-    opacity: 0.7;
-}
-

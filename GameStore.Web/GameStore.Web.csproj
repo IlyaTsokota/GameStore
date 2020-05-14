@@ -338,8 +338,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery-migrate-3.3.0.js" />
-    <Content Include="Scripts\jquery-migrate-3.3.0.min.js" />
+    <Content Include="Scripts\jquery-migrate-3.2.0.js" />
+    <Content Include="Scripts\jquery-migrate-3.2.0.min.js" />
     <Content Include="Scripts\jquery.iframe-transport.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
