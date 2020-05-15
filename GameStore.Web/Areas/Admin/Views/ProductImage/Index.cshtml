@@ -1,0 +1,30 @@
+﻿@model IEnumerable<GameStore.Web.Areas.Admin.ViewModels.ProductImageViewModel.ProductImageViewModel>
+
+@{
+    ViewBag.Title = "Изображения";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+    <div class="d-flex align-items-center my-3">
+        <h2>@ViewBag.Title</h2>
+    </div>
+<span class="text-danger">@ViewData["Message"]</span>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 text-center mb-2">
+                    <img class="img-thumbnail img-fluid" style="width:100%; height: 250px;" src="data:image/jpeg;base64, @Convert.ToBase64String(item.Image)" alt="" />
+                    @using (Html.BeginForm("Delete", "ProductImage", FormMethod.Post, new { }))
+                    {
+                        @Html.Hidden("id", item.ProductImageId)
+                        <button class="btn btn-warning my-1">Удалить</button>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@Html.ActionLink("Загрузить изображения", "AddImages", new { productId = Model.First().ProductId }, new { @class = "btn btn-primary my-2" })
+@Html.ActionLink("Назад", "Edit", "Product", new { id = Model.FirstOrDefault().ProductId }, new { @class = "btn btn-secondary" })

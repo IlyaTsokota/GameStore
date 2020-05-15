@@ -1,0 +1,15 @@
+﻿
+@model GameStore.Web.Areas.Admin.ViewModels.CategoryViewModels.IndexCategoryViewModel
+
+@{
+    ViewBag.Title = "Категории";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex justify-content-between align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Добавить", "Create", new {area="Admin" } , htmlAttributes: new { @class = "btn btn-primary" })
+</div>
+@using (Ajax.BeginForm("GetCategories", "Category", new AjaxOptions { UpdateTargetId = "results" }))
+{
+    <div id="results">@Html.Partial("_Categories", Model)</div>
+}

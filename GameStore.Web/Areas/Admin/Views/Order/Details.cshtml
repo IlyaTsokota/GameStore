@@ -1,0 +1,159 @@
+﻿@using Microsoft.Ajax.Utilities
+@model GameStore.Web.Areas.Admin.ViewModels.OrderViewModels.DetailsOrderViewModel
+
+@{
+    ViewBag.Title = "Заказ №" + Model.OrderId;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<span class="text-danger">@ViewData["Message"]</span>
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.ActionLink(Model.FullName, "Details", "Customer", new { id = Model.CustomerId }, null)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderStatus.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Model.OrderDate.ToString("dd.MM.yyyy HH:mm")
+        </dd>
+
+        @if (!Model.Manager.IsNullOrWhiteSpace())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Manager)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Manager)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AcceptedDate)
+            </dt>
+
+            <dd>
+                @Model.AcceptedDate.ToString("dd.MM.yyyy HH:mm")
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+
+        @if (!Model.Comment.IsNullOrWhiteSpace())
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Comment)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Comment)
+            </dd>
+        }
+    </dl>
+</div>
+<div class="table-responsive">
+    @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
+    <table class="table">
+        <tr>
+            <th>№</th>
+            <th>@Html.DisplayNameFor(x => x.OrderDetails[0].Name)</th>
+            <th>@Html.DisplayNameFor(x => x.OrderDetails[0].Price)</th>
+            <th class="text-right">@Html.DisplayNameFor(x => x.OrderDetails[0].QuantityInCart)</th>
+            @if (Model?.OrderStatus.OrderStatusId == 1)
+            {
+                <th class="text-right">@Html.DisplayNameFor(x => x.OrderDetails[0].QuantityInStock)</th>
+            }
+        </tr>
+        @for (var i = 0; i < Model.OrderDetails.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>@Model.OrderDetails[i].Name</td>
+                <td>@Model.OrderDetails[i].Price</td>
+                <td class="text-right">@Model.OrderDetails[i].QuantityInCart</td>
+                @if (Model.OrderStatus.OrderStatusId == 1)
+                {
+                    <td class="text-right">@Model.OrderDetails[i].QuantityInStock</td>
+                }
+            </tr>
+        }
+    </table>
+</div>
+<div class="d-flex justify-content-between">
+    @if (Model.OrderStatus.OrderStatusId == 1)
+    {
+        using (Html.BeginForm("AcceptOrder", "Order", FormMethod.Post))
+        {
+            @Html.Hidden("id")
+            <button class="btn btn-success">Разрешить оплату</button>
+        }
+    }
+    else if (Model.OrderStatus.OrderStatusId == 2)
+    {
+        using (Html.BeginForm("OrderPaid", "Order", FormMethod.Post))
+        {
+            @Html.Hidden("id")
+            <button class="btn btn-success">Заказ оплачен</button>
+        }
+    }
+    else if (Model.OrderStatus.OrderStatusId == 3)
+    {
+        using (Html.BeginForm("OrderCompleted", "Order", FormMethod.Post))
+        {
+            @Html.Hidden("id")
+            <button class="btn btn-success">Заказ выполнен</button>
+        }
+    }
+
+    @if (Model.OrderStatus.OrderStatusId < 4)
+    {
+        using (Html.BeginForm("Cancel", "Order", FormMethod.Post, new { @class = "mx-1" }))
+        {
+            @Html.Hidden("id")
+            <button class="btn btn-danger">Отменить заказ</button>
+        }
+    }
+
+</div>
+
+@Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-secondary my-1" })

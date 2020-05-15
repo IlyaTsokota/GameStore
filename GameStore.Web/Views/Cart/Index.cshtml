@@ -1,0 +1,66 @@
+﻿@model GameStore.Web.ViewModels.CartViewModels.IndexCartViewModel
+
+@{
+    ViewBag.Title = "Корзина";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 bg-light radius mt-5 mb-3">
+            @if (Model.CartItems == null)
+            {
+                <h2 class="text-center">Ваша корзина пуста!</h2>
+            }
+            else
+            {
+
+
+                <h2 class="text-center">Ваша корзина</h2>
+                <table class="table table-hover cart-page ">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+
+                            <th>Цена</th>
+                            <th>Количество</th>
+                            @*<th class="text-right">Общая цена</th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CartItems)
+                        {
+                            <tr>
+                                <td><span class="p-name">@item.Product.Name</span> </td>
+                                <td><span class="p-name">@item.Product.Price</span> </td>
+                                <td>
+                                    <a class="quantity" onclick="Change(this, 1, @item.CartLineId)">+</a>
+                                    <span class="p-name">@item.Quantity</span>
+                                    <a class="quantity" onclick="Change(this, 0,  @item.CartLineId)">-</a>
+
+                                </td>
+
+                                @*@{var totalPrice = item.Product.Price * item.Quantity; }
+                            <td class="text-right" id="lineTotal[@item.CartLineId]">
+                                @totalPrice.ToString("# грн")
+                            </td>*@
+                                <td class="text-right"><a class="remove" onclick="Change(this, -1,  @item.CartLineId)">Удалить</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right">Итого:</td>
+                            <td class="text-right" id="totalPrice">
+                                @Model.TotalValue.ToString("# грн")
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            }
+            <div class="text-center">
+                <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
+            </div>
+        </div>
+    </div>
+</div>

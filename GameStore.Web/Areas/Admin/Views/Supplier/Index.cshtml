@@ -1,0 +1,27 @@
+﻿
+@model GameStore.Web.Areas.Admin.ViewModels.SupplierViewModels.IndexSupplierViewModel
+
+@{
+    ViewBag.Title = "Поставщики";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="d-flex justify-content-between align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Добавить", "Create", new { area = "Admin" }, htmlAttributes: new { @class = "btn btn-primary" })
+</div>
+@using (Ajax.BeginForm("GetSuppliers", new AjaxOptions { UpdateTargetId = "suppliers" }))
+{
+    <div class="form-group d-flex align-items-center">
+        <div class="form-check col col-sm-6">
+            <label class="form-check-label">
+                <input class="form-check-input" name="includeDeleted" type="checkbox" id="AjaxChangeSubmit" value="true" />
+                Только удаленные
+            </label>
+        </div>
+
+    </div>
+    <div id="suppliers">
+        @Html.Partial("_Suppliers", Model)
+    </div>
+}
+

@@ -1,0 +1,50 @@
+﻿@model GameStore.Web.Areas.Admin.ViewModels.CategoryViewModels.DetailsCategoryViewModel
+
+@{
+    ViewBag.Title = "Атрибуты категории " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="d-flex justify-content-between align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Добавить", "Create", new { categoryId = Model.CategoryId }, new { @class = "btn btn-primary" })
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(x => x.Attributes[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(x => x.Attributes[0].AllowFiltering)
+        </th>
+        <th class="text-right">Действие</th>
+    </tr>
+
+    @foreach (var item in Model.Attributes)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (item.AllowFiltering)
+                {
+                    <text>Да</text>
+                }
+                else
+                {
+                    <text>Нет</text>
+                }
+            </td>
+            <td class="text-right">
+                @Html.ActionLink("Редактировать", "Edit", new { id = item.AttributeId }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+    }
+
+</table>
+<p>
+    @Html.ActionLink("Назад", "Index", "Category", new { id = Model.CategoryId }, new { @class = "btn btn-secondary" })
+</p>

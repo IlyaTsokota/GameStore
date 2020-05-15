@@ -1,0 +1,45 @@
+﻿@model GameStore.Web.Areas.Admin.ViewModels.UserViewModels.IndexUserViewModel
+@using GameStore.Web.Helpers
+@{
+    ViewBag.Title = "Менеджеры";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex justify-content-between align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+    @Html.ActionLink("Добавить", "Add", null, new { @class = "btn btn-primary" })
+</div>
+
+<table class="table table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.FirstOrDefault().FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.FirstOrDefault().PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.FirstOrDefault().Email)
+        </th>
+        <th class="text-right">Действие</th>
+    </tr>
+
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td class="text-right">
+                @Html.ActionLink("Подробности", "Details", new { id = item.Id }, new { @class = "btn btn-info" })
+            </td>
+        </tr>
+    }
+</table>
+@Html.PageLinks(Model.Pager, x=>Url.Action("Index", new { page = x}))

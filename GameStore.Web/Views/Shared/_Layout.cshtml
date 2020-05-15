@@ -1,0 +1,354 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/Error.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/Content/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/slick/slick-theme.css" />
+    @Styles.Render("~/main/css")
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header>
+        <div class="header-top-wrapper mdb-color">
+            <div class="container">
+                <div class="row">
+                    <div class=" col-md-12 ">
+                        <nav class="navbar navbar-expand-lg navbar-dark ">
+
+                            <button class="navbar-toggler bg-dark" type="button" data-toggle="collapse" data-target="#navbarNav"
+                                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav list-info mr-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">О нас</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Гарантия</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Оплата и доставка</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Контакты</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            @Html.Partial("_LoginPartial")
+                        </nav>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-middle-wrapper mt-2">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-auto ">
+                        <h1 class="logo">
+                            <a href="@Url.Action("Index", "Home") " class="nav-link text-dark"><i class=" fa fa-gamepad"></i><b class="text-primary">Game</b><span class="text-danger">Store</span> </a>
+                        </h1>
+                    </div>
+                    <div class=" col-12 col-md-6 align-self-center">
+                        <form class="form-inline md-form form-sm active-pink-2 ">
+                            <input class="form-control form-control-sm w-100 " type="text" placeholder="Поиск"
+                                   aria-label="Search">
+                        </form>
+                    </div>
+                    <div class=" col-12 col-md-auto">
+                        <div class="row justify-content-between text-center">
+                            <div class="col-6">
+                                <a href="@Url.Action("Index", "Wish")" class="link-cart text-danger">
+                                    <h3>
+                                        <i class="fa fa-heart" aria-label="true"></i>
+                                    </h3>
+                                    <p>Избранное</p>
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="@Url.Action("Index", "Cart")" class="link-cart text-success">
+                                    <h3>
+                                        <i class="fa fa-shopping-cart" aria-label="true"></i>
+                                    </h3>
+                                    <p>Корзина</p>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom-wrapper bg-primary mt-2">
+            <div class="container">
+                <div class="row justify-content-md-around justify-content-start ">
+                    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+                        <button class="navbar-toggler pull-left" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Products")">Все товары</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Playstation </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h3 class="text-white">Playstation</h3>
+                                                    <ul class="nav">
+                                                        <li class="nav-item">@Html.ActionLink("Консоли Playstation 4", "GetProducts", "Product", new { category = "Консоли Playstation 4" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Игры Playstation 4", "GetProducts", "Product", new { category = "Игры Playstation 4" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Геймпады Playstation 4", "GetProducts", "Product", new { category = "Геймпады Playstation 4" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  /.container  -->
+
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Xbox </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h3 class="text-white">Xbox One</h3>
+                                                    <ul class="nav">
+                                                        <li class="nav-item">@Html.ActionLink("Консоли Xbox One", "GetProducts", "Product", new { category = "Консоли Xbox One" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Игры Xbox One", "GetProducts", "Product", new { category = "Консоли Xbox One" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Геймпады Xbox One", "GetProducts", "Product", new { category = "Консоли Xbox One" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  /.container  -->
+
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Nintendo </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h3 class="text-white">Nintendo</h3>
+                                                    <ul class="nav">
+                                                        <li class="nav-item">@Html.ActionLink("Консоли Nintendo", "GetProducts", "Product", new { category = "Консоли Nintendo" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Игры Nintendo", "GetProducts", "Product", new { category = "Консоли Nintendo" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Геймпады Nintendo", "GetProducts", "Product", new { category = "Консоли Nintendo" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  /.container  -->
+
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Геймпады </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <h3 class="text-white">Геймпады</h3>
+                                                    <ul class="nav">
+                                                        <li class="nav-item">@Html.ActionLink("Геймпады Playstation 4", "GetProducts", "Product", new { category = "Геймпады Playstation 4" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Геймпады Xbox One", "GetProducts", "Product", new { category = "Геймпады Xbox One" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+                                                        <li class="nav-item">@Html.ActionLink("Геймпады Nintendo", "GetProducts", "Product", new { category = "Геймпады Nintendo" }, htmlAttributes: new { @class = "nav-link" })</li>
+
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--  /.container  -->
+
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <main>
+
+        @RenderBody()
+
+    </main>
+    <footer class="page-footer font-small mdb-color pt-4">
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left">
+
+            <!-- Footer links -->
+            <div class="row text-center text-md-left mt-3 pb-3 text-white">
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">GameStore</h6>
+                    <p>
+                        Добро пожаловать в наш интернет магазин по продаже видеоигр, консолей, и аксесуарам. Здесь вы сможете найти все что нужно для геймера!
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <hr class="w-100 clearfix d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Товары</h6>
+                    <p>
+                        <a href="#!" class="link-decoration">Playstation 4</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="link-decoration">Xbox One</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="link-decoration">Nintendo</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="link-decoration">Геймпады</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <hr class="w-100 clearfix d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Полезные ссылки</h6>
+                    <p>
+                        <a href="#!" class="link-decoration">Профиль</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="link-decoration">Товары</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="link-decoration">Оплата и доставка</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="link-decoration">О нас</a>
+                    </p>
+                </div>
+
+                <!-- Grid column -->
+                <hr class="w-100 clearfix d-md-none">
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Контакты</h6>
+                    <p>
+                        <i class="fa fa-home mr-3"></i> Харьков, NY 10012, UK
+                    </p>
+                    <p>
+                        <i class="fa fa-envelope mr-3"></i> gamestore@gmail.com
+                    </p>
+                    <p>
+                        <i class="fa fa-phone mr-3"></i> + 380 099 2560 048
+                    </p>
+                    <p>
+                        <i class="fa fa-print mr-3"></i> + 380 068 2560 048
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Footer links -->
+
+            <hr>
+
+            <!-- Grid row -->
+            <div class="row d-flex align-items-center text-white">
+
+                <!-- Grid column -->
+                <div class="col-md-7 col-lg-8 ">
+
+                    <!--Copyright-->
+                    <p class="text-center text-md-left">
+                        © 2020 Все права защищены: Цокота Илья
+                    </p>
+
+                </div>
+                <!-- Grid column -->
+                <!-- Grid column -->
+                <div class="col-md-5 col-lg-4 ml-lg-0">
+
+                    <!-- Social buttons -->
+                    <div class="text-center text-md-right">
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1 circle-link">
+                                    <i class="fa fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1 circle-link">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1 circle-link">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a class="btn-floating btn-sm rgba-white-slight mx-1 circle-link">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!-- Grid column -->
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+        <!-- Footer Links -->
+
+    </footer>
+    <!-- Footer -->
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/jquery-migrate-3.3.0.min.js")
+    @Scripts.Render("~/Content/slick/slick.js")
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/mainJs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

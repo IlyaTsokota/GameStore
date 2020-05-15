@@ -1,0 +1,61 @@
+﻿@model GameStore.Web.Areas.Admin.ViewModels.SupplyViewModels.AddSupplyViewModel
+
+@{
+    ViewBag.Title = "Создание поставки";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="d-flex align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(x => x.SupplierId, "Поставщик", new { @class = "col" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(x => x.SupplierId, Model.Suppliers, "Выберите поставщика", new { @class = "form-control", id = "input-category" })
+                @Html.ValidationMessageFor(model => model.SupplierId, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div id="supplyProducts">
+            
+            <div class="form-group row mx-0 supply__product">
+                <div class="col-md-6">
+                    @Html.LabelFor(x => x.SupplyProducts[0].Name)
+                    @Html.DropDownListFor(x => x.SupplyProducts[0].ProductId, Model.Products, "Выберите товар", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.SupplyProducts[0], string.Empty, new { @class = "text-danger" })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.LabelFor(x => x.SupplyProducts[0].Quantity)
+                    @Html.EditorFor(x => x.SupplyProducts[0].Quantity, new { htmlAttributes = new { @class = "form-control", min = 0 } })
+                </div>
+
+                <div class="col-md-2">
+                    @Html.LabelFor(x => x.SupplyProducts[0].Price)
+                    @Html.EditorFor(x => x.SupplyProducts[0].Price, new { htmlAttributes = new { @class = "form-control", min = 0 } })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <button class="btn btn-outline-success" id="supplyProductAdd" type="button"><i class="fas fa-plus"></i> Добавить товар</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class=" col-md-10">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+                @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}

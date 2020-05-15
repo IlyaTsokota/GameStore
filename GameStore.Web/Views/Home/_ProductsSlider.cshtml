@@ -1,0 +1,51 @@
+﻿@model List<GameStore.Web.ViewModels.ProductViewModels.ProductViewModel>
+
+
+
+
+<div class="row">
+
+
+    <div class="slider ">
+
+
+        @foreach (var item in Model)
+        {
+            if (!item.IsDeleted && item.Quantity != 0)
+            {
+                <div class="col-12 col-sm-8 col-md-6 col-lg-4 mt-2 mr-auto ml-auto">
+                    <div class="slick-slide">
+                        <div class="product-wrap">
+                            <div class="product-image">
+                                <a href="@Url.Action("Details", "Products",  new { productId = item.ProductId })">
+                                    <img class="img-fluid img-product" src="data:image/jpeg;base64, @Convert.ToBase64String(item.Images.FirstOrDefault().Image)" alt="@item.Name">
+                                    <div class="shadow"></div>
+                                </a>
+                                <a class="detail-link" href="@Url.Action("Details", "Products",  new { productId = item.ProductId })" title="Быстрый просмотр"></a>
+                                <div class="actions">
+                                    <div class="actions-btn">
+                                        <a class="add-to-cart" href="@Url.Action("AddToCart", "Cart", new { productId = item.ProductId })" title="Добавить в корзину"></a>
+                                        <a class="add-to-wishlist" href="@Url.Action("AddToWish", "Wish", new { productId = item.ProductId })" title="Добавить в мои желания"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-list">
+                                <h3>
+                                    @item.Name
+                                </h3>
+                                @if (item.OldPrice != 0 && item.OldPrice != null)
+                                {
+                                    <div class="old-price text-danger" style="text-decoration:line-through">@item.OldPrice.ToString("# грн")</div>
+                                }
+                                <div class="price">@item.Price.ToString("# грн")</div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="@Url.Action("Index", "Home",  new { Area = string.Empty } )">Game Store</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarCollapse"
+                aria-controls="navbarCollapse"
+                aria-expanded="true"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto sidenav" id="navAccordion">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action( "Index", "Order" )">Заказы</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action( "Index" ,"Category")">Категории</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action( "Index" ,"Product")">Товары</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index","Supplier" )">Поставщики</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action( "Index","Supply" )">Поставки</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action( "Index","Customer" )">Пользователи</a>
+                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action( "Index","Manager" )">Менеджеры</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action( "Index","Log")">Логи</a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+
+    <main class="content-wrapper mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/scripts/jquery.unobtrusive-ajax.js")
+    @Scripts.Render("~/bundles/adminJs")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+﻿@model GameStore.Web.Areas.Admin.ViewModels.AttributeViewModels.AttributeViewModel
+
+@{
+    ViewBag.Title = "Редактирование атрибута";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.AttributeId)
+        @Html.HiddenFor(model => model.CategoryId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, new { @class = "col" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <label for="AllowFiltering">
+                    <input type="checkbox" name="AllowFiltering" id="AllowFiltering" value="true"
+                           @if (Model.AllowFiltering) 
+                           {
+                               <text> checked</text>
+                           } />
+                    Разрешить фильтрацию
+                </label>
+                @Html.ValidationMessageFor(model => model.AllowFiltering, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+                @Html.ActionLink("Назад", "Index", new { categoryId = Model.CategoryId }, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+</div>

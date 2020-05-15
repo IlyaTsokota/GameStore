@@ -1,0 +1,77 @@
+﻿@using GameStore.Web.ViewModels.AccountViewModels
+@model GameStore.Web.ViewModels.AccountViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Вход";
+}
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ReturnUrl)
+    <div class="auth">
+        <div class="auth__header">
+            <div class="auth__logo">
+                <h1 class="text-white">Аккаунт / Войти</h1>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-10 col-sm-12 col-md-5 m-5">
+                    <div class="auth__body">
+                        <form class="auth__form" autocomplete="off">
+                            <div class="auth__form_body">
+                                <h3 class="auth__form_title text-center">Вход</h3>
+                                <div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Email, new { @class = "text-uppercase small " })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "email@example.com" })
+                                        @Html.ValidationMessageFor(m => m.Email, string.Empty, new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(m => m.Password, new { @class = "text-uppercase small " })
+                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Пароль" })
+                                        @Html.ValidationMessageFor(m => m.Password, string.Empty, new { @class = "text-danger" })
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="checkbox">
+                                            @Html.CheckBoxFor(m => m.RememberMe)
+                                            @Html.LabelFor(m => m.RememberMe)
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="auth__form_actions">
+                                <button class="btn btn-primary btn-lg btn-block">
+                                    Войти
+                                </button>
+                                <div class="mt-2 text-center">
+                                    <a href="@Url.Action("ForgotPassword")" class="small text-uppercase btnCreate">
+                                        Забыли пароль?
+                                    </a>
+                                    <p class="small mt-2 text-uppercas">
+                                        Еще не зарегистрированы?
+                                        <a href="@Url.Action("Register")">
+                                            Зарегистрироваться
+                                        </a>
+                                    </p>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<div id='dialogDiv' class='modal fade' tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='dialogContent'></div>
+        </div>
+    </div>
+</div>
+

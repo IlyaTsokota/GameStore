@@ -1,0 +1,38 @@
+﻿
+
+@model GameStore.Web.Areas.Admin.ViewModels.SupplierViewModels.SupplierViewModel
+@{
+    ViewBag.Title = "Изменит поставщика №" + Model.SupplierId;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="d-flex align-items-center my-3">
+    <h2>@ViewBag.Title</h2>
+</div>
+@using (Html.BeginForm("Edit", "Supplier", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m=>m.SupplierId)
+    @Html.ValidationSummary(false, string.Empty, new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, new { @class = "col" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Phone, new { @class = "col" })
+        <div class="col-md-12">
+            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" ,placeholder = "+380990482560"} })
+            @Html.ValidationMessageFor(model => model.Phone, string.Empty, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="Создать" class="btn btn-primary" />
+            @Html.ActionLink("Назад", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
+    </div>
+
+}

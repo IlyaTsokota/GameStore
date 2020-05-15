@@ -1,0 +1,28 @@
+﻿
+@model GameStore.Web.ViewModels.ProductViewModels.IndexProductViewModel
+@{
+    ViewBag.Title = "Товары";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Ajax.BeginForm("GetProducts", new AjaxOptions { UpdateTargetId = "products" }))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                @Html.Partial("_FiltersProduct", Model)
+            </div>
+            <div class="col-md-8">
+                <div id="products">
+                    @Html.Partial("_Products", Model)
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div id='dialogDiv' class='modal fade' tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='dialogContent'></div>
+        </div>
+    </div>
+</div>
