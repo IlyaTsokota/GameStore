@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "Ссылка отправлена";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center m-5">
+            <h1 class="text-center">@ViewBag.Title.</h1>
+            <div>
+                <p>
+                    На Вашу почту отправлена ссылка. Кликните по ней.
+                </p>
+                @Html.ActionLink("На главную", "Index", "Home", null, new { @class = "btn-link" })
+            </div>
+        </div>
+    </div>
+</div>

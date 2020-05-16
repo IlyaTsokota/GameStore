@@ -9,6 +9,7 @@ using GameStore.Data.Identity;
 using GameStore.Model;
 using GameStore.Web.Extensions;
 using GameStore.Web.ViewModels.AccountViewModels;
+using GameStore.Web.ViewModels.ProfileViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -55,8 +56,8 @@ namespace GameStore.Web.Controllers
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                //case SignInStatus.RequiresVerification:
-                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = true });
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = true });
                 default:
                     ModelState.AddModelError(string.Empty, @"Неверные данные.");
                     return View(model);
@@ -163,6 +164,89 @@ namespace GameStore.Web.Controllers
         {
             return View();
         }
+
+        // GET: /Account/VerifyCode
+        [AllowAnonymous]
+        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        {
+            // Require that the user has already logged in via username/password or external login
+            if (!await _signInManager.HasBeenVerifiedAsync().ConfigureAwait(false))
+            {
+                return View("Error");
+            }
+
+            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        }
+
+        // POST: /Account/VerifyCode
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            // The following code protects for brute force attacks against the two factor codes. 
+            // If a user enters incorrect codes for a specified amount of time then the user account 
+            // will be locked out for a specified amount of time. 
+            // You can configure the account lockout settings in IdentityConfig
+            var result = await _signInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser).ConfigureAwait(false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    Logger.Log.Info($"{User.Identity.GetUserName()}  вошел на сайт используя двухфакторную аутентификацию");
+                    return RedirectToLocal(model.ReturnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                default:
+                    ModelState.AddModelError(string.Empty, @"Неверный код.");
+                    return View(model);
+            }
+        }
+        [AllowAnonymous]
+        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
+        {
+            var userId = await _signInManager.GetVerifiedUserIdAsync().ConfigureAwait(false);
+            if (userId == null)
+            {
+                return View("Error");
+            }
+
+            var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(userId).ConfigureAwait(false);
+            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
+            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+        }
+
+        // POST: /Account/SendCode
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> SendCode(SendCodeViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            // Generate the token and send it
+            if (!await _signInManager.SendTwoFactorCodeAsync(model.SelectedProvider).ConfigureAwait(false))
+            {
+                return View("Error");
+            }
+            //var userId = User.Identity.GetUserId();
+            //var user = await _userManager.FindByIdAsync(userId).ConfigureAwait(false);
+            //var code = await _userManager.GenerateChangePhoneNumberTokenAsync(userId, user.PhoneNumber).ConfigureAwait(false);
+            //var message = new IdentityMessage
+            //{
+            //    Destination = user.PhoneNumber,
+            //    Body = "Ваш код: " + code
+            //};
+            //await _userManager.SmsService.SendAsync(message).ConfigureAwait(false);
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
+        }
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
@@ -210,6 +294,7 @@ namespace GameStore.Web.Controllers
         [System.Web.Mvc.Authorize]
         public ActionResult LogOff()
         {
+            Logger.Log.Info($"{User.Identity.Name} вышел из аккаунта");
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

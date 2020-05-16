@@ -24,7 +24,7 @@
                     <h3>
                         @item.Name
                     </h3>
-                    @if (item.OldPrice != 0 && item.OldPrice != null)
+                    @if (item.OldPrice != 0 )
                     {
                         <div class="old-price text-danger" style="text-decoration:line-through">@item.OldPrice.ToString("# грн")</div>
                     }

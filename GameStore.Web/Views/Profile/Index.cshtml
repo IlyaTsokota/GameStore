@@ -1,0 +1,91 @@
+﻿@model GameStore.Web.ViewModels.ProfileViewModels.ProfileViewModel
+@{
+    ViewBag.Title = "Профиль пользователя";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <ul class=" list-group">
+                <li class="list-group-item active"><a href="@Url.Action("Index", "Profile")" class="text-black link-decoration"><i class="fa fa-user-circle-o" aria-label="true"></i> Профиль</a></li>
+                <li class="list-group-item"><a href="@Url.Action("GetOrders", "Profile")" class="text-black link-decoration"><i class="fa fa-first-order" aria-label="true"> </i> Список заказов</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center my-3">
+                <h2>@ViewBag.Title</h2>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    @Html.Partial("_EditProfile", Model.UserInfo)
+                    <hr />
+                    <p class="text-success">@ViewBag.StatusMessage</p>
+                    <div class="row justify-content-between bg-warning radius p-5 mb-4 ">
+                        <div class="col-md-12  mb-2">
+                            <div class="row">
+                                <span class="font-weight-bold w-100">Электронная почта: </span>
+                                <span class="w-100">@Model.UserInfo.Email</span>
+                                @if (!Model.EmailConfirmed)
+                                {
+                                    <span class="w-100">@Html.ActionLink("Подтвердить электронную почту", "VerifyEmail", null, new { @class = "btn btn-success" })</span>
+                                }
+                            </div>
+
+                        </div>
+                        <div class="col-md-12  mb-2">
+                            <div class="row">
+                                <span class="font-weight-bold w-100">Номер телефона: </span>
+                                @Model.UserInfo.Phone @if (!Model.PhoneNumberConfirmed)
+                                {
+                                    <span class="w-100">
+                                        @Html.ActionLink("Подтвердить номер телефона", "VerifyPhoneNumber", null, new { @class = "btn btn-success " })
+                                    </span>
+                                }
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <div class="row">
+                                <span class="font-weight-bold w-100">Двухфакторная аутентификация: </span>
+
+                                @if (Model.EmailConfirmed || Model.PhoneNumberConfirmed)
+                                {
+                                    if (Model.TwoFactorEnabled)
+                                    {
+                                        using (Html.BeginForm("DisableTwoFactorAuthentication", "Profile", FormMethod.Post, new { @class = "d-inline-block", role = "form" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <text>Включена
+                                                <input type="submit" value="Отключить" class="btn btn-danger m-0 p-0" />
+                                            </text>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        using (Html.BeginForm("EnableTwoFactorAuthentication", "Profile", FormMethod.Post, new { @class = "d-inline-block", role = "form" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <text>Отключена
+                                                <input type="submit" value="Включить" class="btn btn-primary m-0 p-0" />
+                                            </text>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <text>Чтобы включить двухфакторную аутентификацию необходимо подтвердить телефон или электронную почту</text>
+                                }
+                            </div>
+                          
+                        </div>
+
+
+                        @Html.ActionLink("Изменить пароль", "ChangePassword", null, new { @class = "btn btn-danger " })
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

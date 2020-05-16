@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 bg-light radius mt-5 mb-3">
-            @if (Model.CartItems == null)
+            @if (Model.CartItems.Count == 0)
             {
                 <h2 class="text-center">Ваша корзина пуста!</h2>
             }

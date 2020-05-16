@@ -10,7 +10,7 @@ namespace GameStore.Data.Identity
         private readonly string Host = "smtp.gmail.com";
         private readonly int Port = 587;
         private readonly string From = "gamestore3211@gmail.com";
-        private readonly string Pass = "13Asuburus";
+        private readonly string Pass = "13Avtobusus";
 
         public Task SendAsync(IdentityMessage message)
         {
