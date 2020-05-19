@@ -228,6 +228,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
     <Compile Include="Controllers\WishController.cs" />
     <Compile Include="Extensions\HttpPostedFileBaseExtension.cs" />
     <Compile Include="Extensions\ValidationResultExtension.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Mappings\FromViewModel.cs" />
     <Compile Include="Mappings\ToViewModel.cs" />
     <Compile Include="Models\Pager.cs" />
+    <Compile Include="Models\PagerViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModels\ExternalLoginConfirmationViewModel.cs" />
@@ -250,6 +252,13 @@
     <Compile Include="ViewModels\AccountViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\AccountViewModels\ResetPasswordViewModel.cs" />
+    <Compile Include="ViewModels\LiqPay\LiqPayCheckout.cs" />
+    <Compile Include="ViewModels\LiqPay\LiqPayCheckoutFormModel.cs" />
+    <Compile Include="ViewModels\LiqPay\LiqPayHelper.cs" />
+    <Compile Include="ViewModels\OrderViewModels\DetailsOrderViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModels\OrderDetailsViewModel.cs" />
+    <Compile Include="ViewModels\PagerViewModelHelper.cs" />
+    <Compile Include="ViewModels\ProductViewModels\DetailsProductViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="ViewModels\CartViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\CartViewModels\IndexCartViewModel.cs" />
@@ -265,6 +274,7 @@
     <Compile Include="ViewModels\ProfileViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModels\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModels\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\ReviewViewModels\ReviewViewModel.cs" />
     <Compile Include="ViewModels\WishViewModels\WishViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +303,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\354.jpg" />
     <Content Include="Images\carousel1.jfif" />
+    <Content Include="Images\left-and-right-arrows.png" />
+    <Content Include="Images\multimedia-option.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -573,7 +585,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Products\_FiltersProduct.cshtml" />
     <Content Include="Views\Products\_Products.cshtml" />
-    <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Cart\_AddNotification.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -582,6 +594,12 @@
     <Content Include="Views\Profile\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\_EditProfile.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Review\_Reviews.cshtml" />
+    <Content Include="Views\Review\_ReviewForm.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\PayResultFailure.cshtml" />
+    <Content Include="Views\Orders\PayResultSuccess.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

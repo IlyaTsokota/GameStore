@@ -1,0 +1,32 @@
+﻿
+@model GameStore.Web.ViewModels.ReviewViewModels.ReviewViewModel
+
+<div class="col my-2">
+    @using (Html.BeginForm("Create", "Review", FormMethod.Post))
+    {
+
+        @Html.ValidationSummary()
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(x => x.ProductId)
+        @Html.HiddenFor(x => x.Rating, new { id = "reviewRating" })
+
+        <p class="text-center font-weight-bold">Оцените товар</p>
+        <div id="rateMe" class=" row justify-content-center">
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="1" title="1/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="2" title="2/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="3" title="3/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="4" title="4/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="5" title="5/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="6" title="6/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="7" title="7/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="8" title="8/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="9" title="9/10"></i>
+            <i class="fas fa-star py-2 px-1 rate gold" data-index="10" title="10/10"></i>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.Text, "Комментарий", new { @class = "" })
+            @Html.TextAreaFor(x => x.Text, 3, 0, new { @class = "form-control" })
+        </div>
+        <button class="btn btn-primary">Отправить</button>
+    }
+</div>

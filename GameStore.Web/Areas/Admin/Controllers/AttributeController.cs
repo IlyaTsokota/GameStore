@@ -52,8 +52,7 @@ namespace GameStore.Web.Areas.Admin.Controllers
         public ActionResult Create(AttributeViewModel model)
         {
             var attribute = Mapper.Map<AttributeViewModel, Attribute>(model);
-            var errors = _attributeService.CanAddAttribute(attribute);
-            ModelState.AddModelErrors(errors);
+            
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -83,8 +82,7 @@ namespace GameStore.Web.Areas.Admin.Controllers
         public ActionResult Edit(AttributeViewModel model)
         {
             var attribute = Mapper.Map<AttributeViewModel, Attribute>(model);
-            var errors = _attributeService.CanAddAttribute(attribute);
-            ModelState.AddModelErrors(errors);
+           
             if (!ModelState.IsValid)
             {
                 return View(model);

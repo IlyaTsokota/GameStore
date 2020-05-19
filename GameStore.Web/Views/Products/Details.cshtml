@@ -1,0 +1,150 @@
+﻿@model GameStore.Web.ViewModels.ProductViewModels.DetailsProductViewModel
+@{
+    ViewBag.Title = "Детальнее";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 mt-3">
+            <h1 class="text-black">@Model.Name</h1>
+            <div class="row mt-3">
+                <div class="col-md-8 border-right border-top border-left ">
+                    <div class="sliders slider-for mt-3 mb-3 clearfix ">
+                        @foreach (var item in Model.Images)
+                        {
+                            <div class="d-flex justify-content-center">
+                                <img class="img-fluid  img-main-slider" src="data:image/jpeg;base64, @Convert.ToBase64String(item)" alt="">
+                            </div>
+                        }
+                    </div>
+                    <div class="sliders slider-nav ">
+                        @foreach (var item in Model.Images)
+                        {
+                            <div class="pr-1 pl-1">
+                                <img class="img-fluid img-thumbnail img-slider " src="data:image/jpeg;base64, @Convert.ToBase64String(item)" alt="">
+                            </div>
+                        }
+                    </div>
+
+                </div>
+                <div class="col-md-4 border-top border-right">
+                    <div class="row">
+                        <div class="col-md-6 mr-auto mt-5 price-wraper ">
+                            @if (Model.OldPrice != 0)
+                            {
+                                <div><h4 class="old-price">@Model.OldPrice.ToString("# грн")</h4></div>
+                            }
+                            <div><h4 class="price">@Model.Price.ToString("# грн")</h4></div>
+                        </div>
+                        <div class="col-md-6 mt-5 ">
+
+                            @if (Model.Quantity > 0)
+                            {
+                                <h5><i class="fa fa-plus text-success"></i>Есть в наличии</h5>
+                            }
+                            else
+                            {
+                                <h5><i class="fa fa-minus text-danger"></i>Нет в наличии</h5>
+                            }
+                            <div class="product-rating ">
+                                @for (var i = 2; i <= 10; i += 2)
+                                {
+                                    if (Model.ReviewCount == 0 || Model.Rating - i < -1)
+                                    {
+                                        <i class="far fa-star small"></i>
+                                    }
+                                    else if (Model.Rating - i >= 0)
+                                    {
+                                        <i class="fa fa-star small"></i>
+                                    }
+                                    else if (Model.Rating - i >= -1)
+                                    {
+                                        <i class="fas fa-star-half-alt small"></i>
+                                    }
+
+                                }
+
+                                (оценок: @Model.ReviewCount)
+                            </div>
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-10 mt-5 offset-1">
+                            @using (Html.BeginForm("AddToCart", "Cart"))
+                            {
+                                @Html.Hidden("id", Model.ProductId)
+                                <input type="submit" value="Купить" class="btn btn-outline-success col-12" />
+                            }
+                        </div>
+                        <div class="w-100"></div>
+                        <div class="col-md-10 mt-5 offset-1 mb-3">
+                            @using (Html.BeginForm("AddToWish", "Wish"))
+                            {
+                                @Html.Hidden("id", Model.ProductId)
+                                <input type="submit" value="Добавить в список желаний" class="btn btn-outline-warning col-12" />
+                            }
+                        </div>
+                    </div>
+
+                </div>
+                <div class="w-100"></div>
+                <div class="col-12 border">
+                    <nav class="ggwp mt-4">
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Описание</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Характеристики</a>
+                            <a class="nav-item nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Отзывы</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">@Model.Description</div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <table class="table table-hover">
+                                <tbody>
+                                    <tr>
+                                        <td>Гарантия</td>
+                                        <td class="text-right">@Model.Warranty</td>
+                                    </tr>
+                                    @foreach (var characteristic in Model.Characteristics)
+                                    {
+                                        <tr>
+                                            <td>@characteristic.Key</td>
+                                            <td class="text-right">@characteristic.Value</td>
+                                        </tr>
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                            <div class="d-flex flex-wrap">
+                                <div class="col-12 col-lg-8">
+                                    @Html.HiddenFor(x => x.ProductId, Model.ProductId)
+                                    <div id="productReviews"></div>
+                                </div>
+                                <div class="col-12 col-lg-4">
+                                    <h3 class="text-center">Оставить отзыв</h3>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        if (Model.CanAddReview)
+                                        {
+                                            @Html.Partial("~/Views/Review/_ReviewForm.cshtml", Model.NewReview)
+                                        }
+                                        else
+                                        {
+                                            <p class="text-center">Вы уже оставили отзыв</p>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <p>Эта функция доступна только пользователям сайта <a href="@Url.Action("Login", "Account")" class="btn-link">Войдите</a> или <a href="@Url.Action("Register", "Account")" class="btn-link">Зарегистрируйтесь</a></p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

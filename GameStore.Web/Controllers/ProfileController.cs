@@ -131,7 +131,7 @@ namespace GameStore.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var user = await _userManager.FindByIdAsync(userId).ConfigureAwait(false);
-            var code = await _userManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), user.PhoneNumber).ConfigureAwait(false);
+            var code = await _userManager.GenerateTwoFactorTokenAsync(userId, user.PhoneNumber).ConfigureAwait(false);
             if (_userManager.SmsService == null)
             {
                 return user.PhoneNumber == null

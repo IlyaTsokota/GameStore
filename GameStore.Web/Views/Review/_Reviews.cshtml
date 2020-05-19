@@ -1,0 +1,64 @@
+﻿
+@using GameStore.Web.Helpers
+@using Microsoft.AspNet.Identity
+@model GameStore.Web.Models.PagerViewModel<GameStore.Web.ViewModels.ReviewViewModels.ReviewViewModel>
+
+<div id="productReviews">
+    @if (Model.Entities.Count != 0)
+    {
+        @Html.Hidden("ProductId", Model.Entities?[0].ProductId)
+        foreach (var review in Model.Entities)
+        {
+            <div class="product-review">
+                <div class="review-header ">
+                    <span class="text-primary">@review.FirstName</span>
+                    <span class="product-rating ">
+                        @for (var i = 2; i <= 10; i += 2)
+                        {
+                            if (review.Rating - i >= 0)
+                            {
+                                <i class="fa fa-star small"></i>
+                            }
+                            else if (review.Rating - i >= -1)
+                            {
+                                <i class="fas fa-star-half-alt small"></i>
+                            }
+                            else
+                            {
+                                <i class="far fa-star small"></i>
+                            }
+                        }
+                    </span>
+                    <span class="text-muted float-right">@review.ReviewDate.ToString("dd.MM.yyyy")</span>
+                </div>
+                <div class="review-body">
+                    <p class="pl-2 overflow-auto">@review.Text</p>
+                    @if (User.Identity.GetUserId() == review.UserId || User.IsInRole("Manager"))
+                    {
+                        using (Html.BeginForm("Delete", "Review", FormMethod.Post, new { id = "form1", @class = "d-flex justify-content-end align-items-start" }))
+                        {
+                            <form action="@Url.Action("Delete", FormMethod.Post)" class="d-flex justify-content-end align-items-start" id="form2">
+
+                                @Html.Hidden("reviewId", review.ReviewId)
+                                <button class="btn btn-link">Удалить</button>
+                            </form>
+                        }
+                    }
+                    <hr class="m-0" />
+                </div>
+
+            </div>
+        }
+
+
+        using (Ajax.BeginForm("GetReviews", null, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "productReviews" }, new { @class = "w-100" }))
+        {
+            @Html.Hidden("ProductId", Model.Entities[0].ProductId)
+            @Html.PaginationAjax(Model.Pager)
+        }
+    }
+    else
+    {
+        <p>Нет отзывов. Станьте первым!</p>
+    }
+</div>

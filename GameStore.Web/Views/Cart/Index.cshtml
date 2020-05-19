@@ -58,9 +58,10 @@
                     </tfoot>
                 </table>
             }
-            <div class="text-center">
-                <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
-            </div>
+        <div class="text-center">
+            <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
+            <a class="btn btn-primary" href="@Url.Action("Create", "Orders", new { Area = string.Empty } )">Оформить заказ</a>
+        </div>
         </div>
     </div>
 </div>

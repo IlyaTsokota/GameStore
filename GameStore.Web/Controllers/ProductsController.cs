@@ -3,6 +3,7 @@ using GameStore.Model;
 using GameStore.Service;
 using GameStore.Web.Models;
 using GameStore.Web.ViewModels.ProductViewModels;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,10 +43,13 @@ namespace GameStore.Web.Controllers
             return model;
         }
 
+        [HttpGet]
         public ActionResult Details(int id)
         {
-
-            return View();
+            var product = _productService.GeProduct(id);
+            var model = Mapper.Map<Product, DetailsProductViewModel>(product);
+            model.CanAddReview = product.Reviews.All(x => x.UserId != User.Identity.GetUserId());
+            return View(model);
         }
     }
 }

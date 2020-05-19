@@ -13,6 +13,9 @@ namespace GameStore.Web.ViewModels.ProfileViewModels
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
 
         public string ReturnUrl { get; set; }
+
+        public string Email { get; set; }
+
         [DisplayName("Запомнить вас?")]
         public bool RememberMe { get; set; }
     }

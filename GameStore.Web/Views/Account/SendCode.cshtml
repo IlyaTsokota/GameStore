@@ -12,10 +12,11 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.Hidden("rememberMe", Model.RememberMe)
+                @Html.HiddenFor(m=>m.Email)
                 <div class="col-12">
                     Выберите способ подтверждения:
                     @Html.DropDownListFor(model => model.SelectedProvider, Model.Providers, new { @class = "form-control" })
-                    <input type="submit" value="Отправить" class="btn btn-primary my-1"  />
+                    <input type="submit" value="Отправить" class="btn btn-primary my-1" />
                 </div>
 
             }

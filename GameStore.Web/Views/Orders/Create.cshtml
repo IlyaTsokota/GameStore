@@ -7,7 +7,7 @@
 }
 
 
-@using (Html.BeginForm("Create", null, FormMethod.Post, new { id = "createOrder" }))
+@using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { id = "createOrder" }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)

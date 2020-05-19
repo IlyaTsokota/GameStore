@@ -32,7 +32,11 @@ namespace GameStore.Service
             }
             if (product != null)
             {
-                yield return new ValidationResult("Товар с данным названием уже существует!!");
+                yield return new ValidationResult("Товар с данным названием уже существует!");
+            }
+            if (newProduct.OldPrice >= 0 && newProduct.OldPrice <= newProduct.Price)
+            {
+                yield return new ValidationResult("Старая цена не может быть меньше новой!");
             }
         }
 

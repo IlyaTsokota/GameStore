@@ -57,7 +57,7 @@ namespace GameStore.Web.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = true });
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = true, email = model.Email });
                 default:
                     ModelState.AddModelError(string.Empty, @"Неверные данные.");
                     return View(model);
@@ -207,7 +207,7 @@ namespace GameStore.Web.Controllers
             }
         }
         [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
+        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe, string email)
         {
             var userId = await _signInManager.GetVerifiedUserIdAsync().ConfigureAwait(false);
             if (userId == null)
@@ -217,7 +217,7 @@ namespace GameStore.Web.Controllers
 
             var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(userId).ConfigureAwait(false);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe, Email = email });
         }
 
         // POST: /Account/SendCode
@@ -236,15 +236,14 @@ namespace GameStore.Web.Controllers
             {
                 return View("Error");
             }
-            //var userId = User.Identity.GetUserId();
-            //var user = await _userManager.FindByIdAsync(userId).ConfigureAwait(false);
-            //var code = await _userManager.GenerateChangePhoneNumberTokenAsync(userId, user.PhoneNumber).ConfigureAwait(false);
-            //var message = new IdentityMessage
-            //{
-            //    Destination = user.PhoneNumber,
-            //    Body = "Ваш код: " + code
-            //};
-            //await _userManager.SmsService.SendAsync(message).ConfigureAwait(false);
+            var user = await _userManager.FindByNameAsync(model.Email).ConfigureAwait(false);
+            var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user.Id, user.PhoneNumber).ConfigureAwait(false);
+            var message = new IdentityMessage
+            {
+                Destination = user.PhoneNumber,
+                Body = "Ваш код: " + code
+            };
+            await _userManager.SmsService.SendAsync(message).ConfigureAwait(false);
             return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
         // GET: /Account/ResetPassword

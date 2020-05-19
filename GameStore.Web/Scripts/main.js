@@ -35,43 +35,65 @@ $(document).ready(function () {
 
 });
 
-//$('.slider').slick({
-//    dots: true,
-//    infinite: false,
-//    speed: 300,
-//    slidesToShow: 4,
-//    slidesToScroll: 4,
-//    autoplay: true,
-//    autoplaySpeed: 2000,
-//    responsive: [
-//        {
-//            breakpoint: 1024,
-//            settings: {
-//                slidesToShow: 3,
-//                slidesToScroll: 3,
-//                infinite: true,
-//                dots: true
-//            }
-//        },
-//        {
-//            breakpoint: 600,
-//            settings: {
-//                slidesToShow: 2,
-//                slidesToScroll: 2
-//            }
-//        },
-//        {
-//            breakpoint: 480,
-//            settings: {
-//                slidesToShow: 1,
-//                slidesToScroll: 1
-//            }
-//        }
-//        // You can unslick at a given breakpoint now by adding:
-//        // settings: "unslick"
-//        // instead of a settings object
-//    ]
-//});
+$('.slider').slick({
+    arrows: true,
+    dots: false,
+    speed: 300,
+    infinite: true,
+    adaptiveHeight: true,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+        {
+            breakpoint: 1024,
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+            }
+        },
+        {
+            breakpoint: 600,
+            settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+            }
+        },
+        {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+        }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+    ]
+});
+
+
+$('.slider-for').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    asNavFor: '.slider-nav'
+});
+$('.slider-nav').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    asNavFor: '.slider-for',
+    dots: false,
+    focusOnSelect: true
+});
+
+$('a[data-slide]').click(function (e) {
+    e.preventDefault();
+    var slideno = $(this).data('slide');
+    $('.slider-nav').slick('slickGoTo', slideno - 1);
+});
 
 function UpdateTotalPrice() {
     $.ajax({
@@ -149,3 +171,34 @@ function bindForm(dialog) {
         return false;
     });
 }
+
+$('#reviews-tab').click(function () {
+    var productId = $('#ProductId').val();
+    $.ajax({
+        url: "/Review/GetReviews",
+        type: "GET",
+        data: { productId: productId },
+        success: function (result) {
+            $('#productReviews').html(result);
+        }
+    });
+});
+
+$("#createOrder").submit(function () {
+    event.preventDefault();
+    var form = $(this);
+    if (!form.valid()) {
+        return;
+    }
+    var url = form.attr('action');
+    $.post(url, form.serialize()).done(function (result) {
+        if (!result.success) {
+            displayValidationErrors(result.errors);
+            return;
+        }
+        
+        window.location.href = result.returnUrl;
+    }).fail(function () {
+        alert("fail");
+    });
+});
