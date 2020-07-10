@@ -13,6 +13,7 @@ using Attribute = GameStore.Model.Attribute;
 
 namespace GameStore.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class AttributeController : Controller
     {
         // GET: Admin/Attribute
@@ -52,7 +53,7 @@ namespace GameStore.Web.Areas.Admin.Controllers
         public ActionResult Create(AttributeViewModel model)
         {
             var attribute = Mapper.Map<AttributeViewModel, Attribute>(model);
-            
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -82,7 +83,7 @@ namespace GameStore.Web.Areas.Admin.Controllers
         public ActionResult Edit(AttributeViewModel model)
         {
             var attribute = Mapper.Map<AttributeViewModel, Attribute>(model);
-           
+
             if (!ModelState.IsValid)
             {
                 return View(model);

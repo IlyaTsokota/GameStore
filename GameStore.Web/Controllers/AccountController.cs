@@ -98,7 +98,7 @@ namespace GameStore.Web.Controllers
                         .ConfigureAwait(false);
 
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("DisplayEmail");
                 }
 
 

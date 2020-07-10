@@ -236,6 +236,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PagerHelpers.cs" />
+    <Compile Include="Helpers\ProductFilterHelper.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Mappings\AdminFromViewModel.cs" />
     <Compile Include="Mappings\AdminToViewModel.cs" />
@@ -258,7 +259,11 @@
     <Compile Include="ViewModels\OrderViewModels\DetailsOrderViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\PagerViewModelHelper.cs" />
+    <Compile Include="ViewModels\ProductViewModels\AttributeValueViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModels\CategoryProductsViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModels\CategoryViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModels\DetailsProductViewModel.cs" />
+    <Compile Include="ViewModels\ProductViewModels\ProductFilterViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModels\VerifyCodeViewModel.cs" />
     <Compile Include="ViewModels\CartViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\CartViewModels\IndexCartViewModel.cs" />
@@ -600,6 +605,14 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\PayResultFailure.cshtml" />
     <Content Include="Views\Orders\PayResultSuccess.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
+    <Content Include="Views\Home\Warranty.cshtml" />
+    <Content Include="Views\Home\PaymentDeliveryInfo.cshtml" />
+    <Content Include="Views\Home\_Categories.cshtml" />
+    <Content Include="Views\Wish\_WishNotificationFailure.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\O.cshtml" />
+    <Content Include="Views\Shared\_Footer.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

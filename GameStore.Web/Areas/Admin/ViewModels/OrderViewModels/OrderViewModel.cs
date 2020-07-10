@@ -25,5 +25,7 @@ namespace GameStore.Web.Areas.Admin.ViewModels.OrderViewModels
 
         [Display(Name = "Дата заказа")]
         public DateTime OrderDate { get; set; }
+
+
     }
 }

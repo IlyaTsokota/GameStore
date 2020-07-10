@@ -10,6 +10,10 @@
             @if (Model.CartItems.Count == 0)
             {
                 <h2 class="text-center">Ваша корзина пуста!</h2>
+                <div class="text-center">
+                    <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Продолжить покупки</a>
+                   
+                </div>
             }
             else
             {
@@ -51,17 +55,18 @@
                     <tfoot>
                         <tr>
                             <td colspan="3" class="text-right">Итого:</td>
-                            <td class="text-right" id="totalPrice">
-                                @Model.TotalValue.ToString("# грн")
+                            <td class="text-right">
+                                <span id="totalPrice">@Model.TotalValue</span>грн
                             </td>
                         </tr>
                     </tfoot>
                 </table>
+                <div class="text-center">
+                    <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Продолжить покупки</a>
+                    <a class="btn btn-primary" href="@Url.Action("Create", "Orders", new { Area = string.Empty } )">Оформить заказ</a>
+                </div>
             }
-        <div class="text-center">
-            <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
-            <a class="btn btn-primary" href="@Url.Action("Create", "Orders", new { Area = string.Empty } )">Оформить заказ</a>
-        </div>
+
         </div>
     </div>
 </div>

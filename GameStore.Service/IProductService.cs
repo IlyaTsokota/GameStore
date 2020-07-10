@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using GameStore.Model;
+using GameStore.Service.ProductFilters;
 
 namespace GameStore.Service
 {
@@ -14,6 +15,14 @@ namespace GameStore.Service
         List<Product> GetProductsForAdmin(bool includeDeleted, string search, int categoryId);
 
         List<Product> GetProductsForCustomer(string search, string category);
+
+        List<Product> GetProductsForCustomer(
+         IProductSorter productSorter,
+         List<IProductFilter> productFilters = null);
+
+        List<Product> GetProductsForAdmin(
+            IProductSorter productSorter,
+            List<IProductFilter> productFilters = null);
 
         IEnumerable<ValidationResult> CanAddProduct(Product newProduct);
 

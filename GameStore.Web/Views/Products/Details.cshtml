@@ -9,25 +9,37 @@
             <h1 class="text-black">@Model.Name</h1>
             <div class="row mt-3">
                 <div class="col-md-8 border-right border-top border-left ">
-                    <div class="sliders slider-for mt-3 mb-3 clearfix ">
-                        @foreach (var item in Model.Images)
-                        {
-                            <div class="d-flex justify-content-center">
-                                <img class="img-fluid  img-main-slider" src="data:image/jpeg;base64, @Convert.ToBase64String(item)" alt="">
-                            </div>
-                        }
-                    </div>
-                    <div class="sliders slider-nav ">
-                        @foreach (var item in Model.Images)
-                        {
-                            <div class="pr-1 pl-1">
-                                <img class="img-fluid img-thumbnail img-slider " src="data:image/jpeg;base64, @Convert.ToBase64String(item)" alt="">
-                            </div>
-                        }
-                    </div>
+                    @if (Model.Images.Count == 1)
+                    {
+                        <div class="d-flex justify-content-center">
+                            <img class="img-fluid  " src="data:image/jpeg;base64, @Convert.ToBase64String(Model.Images.FirstOrDefault())" alt="">
+                        </div>
+                    }
+                    else
+                    {
 
+
+                        <div class="sliders slider-for mt-3 mb-3 clearfix ">
+
+                            @foreach (var item in Model.Images)
+                            {
+                                <div class="d-flex justify-content-center">
+                                    <img class="img-fluid  img-main-slider" src="data:image/jpeg;base64, @Convert.ToBase64String(item)" alt="">
+                                </div>
+                            }
+                        </div>
+
+                        <div class="sliders slider-nav ">
+                            @foreach (var item in Model.Images)
+                            {
+                                <div class="pr-1 pl-1">
+                                    <img class="img-fluid img-thumbnail img-slider " src="data:image/jpeg;base64, @Convert.ToBase64String(item)" alt="">
+                                </div>
+                            }
+                        </div>
+                    }
                 </div>
-                <div class="col-md-4 border-top border-right">
+                <div class="col-md-4 border-top border-right border-left">
                     <div class="row">
                         <div class="col-md-6 mr-auto mt-5 price-wraper ">
                             @if (Model.OldPrice != 0)
@@ -67,22 +79,18 @@
                                 (оценок: @Model.ReviewCount)
                             </div>
                         </div>
-                        <div class="w-100"></div>
-                        <div class="col-md-10 mt-5 offset-1">
-                            @using (Html.BeginForm("AddToCart", "Cart"))
-                            {
-                                @Html.Hidden("id", Model.ProductId)
-                                <input type="submit" value="Купить" class="btn btn-outline-success col-12" />
-                            }
-                        </div>
-                        <div class="w-100"></div>
-                        <div class="col-md-10 mt-5 offset-1 mb-3">
-                            @using (Html.BeginForm("AddToWish", "Wish"))
-                            {
-                                @Html.Hidden("id", Model.ProductId)
-                                <input type="submit" value="Добавить в список желаний" class="btn btn-outline-warning col-12" />
-                            }
-                        </div>
+                        @if (Model.Quantity > 0)
+                        {
+                            <div class="w-100"></div>
+                            <div class="col-md-10 mt-5 offset-1">
+                                <a class="btn btn-success btnCreate" href="@Url.Action("AddToCart", "Cart", new { productId = Model.ProductId })" title="Добавить в корзину">Добавить в корзину</a>
+
+                            </div>
+                            <div class="w-100"></div>
+                            <div class="col-md-10 mt-5 offset-1 mb-3">
+                                <a class=" btnCreate btn btn-warning" href="@Url.Action("AddToWish", "Wish", new { productId = Model.ProductId })" title="Добавить в мои желания">Добавить в мои желания</a>
+                            </div>
+                        }
                     </div>
 
                 </div>
@@ -96,7 +104,7 @@
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">@Model.Description</div>
+                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">@Html.Raw(Model.Description)</div>
                         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                             <table class="table table-hover">
                                 <tbody>
@@ -148,3 +156,10 @@
     </div>
 </div>
 
+<div id='dialogDiv' class='modal fade' tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='dialogContent'></div>
+        </div>
+    </div>
+</div>

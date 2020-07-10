@@ -46,6 +46,7 @@
     <Compile Include="AttributeValueService.cs" />
     <Compile Include="CartService.cs" />
     <Compile Include="CategoryService.cs" />
+    <Compile Include="Enums\ProductOrderBy.cs" />
     <Compile Include="IAttributeService.cs" />
     <Compile Include="IAttributeValueService.cs" />
     <Compile Include="ICartService.cs" />
@@ -62,8 +63,16 @@
     <Compile Include="LogService.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="OrderStatusService.cs" />
+    <Compile Include="ProductFilters\ProductPriceFilter.cs" />
+    <Compile Include="ProductFilters\ProductNameFilter.cs" />
+    <Compile Include="ProductFilters\ProductFilterList.cs" />
+    <Compile Include="ProductFilters\ProductDeletedFilter.cs" />
+    <Compile Include="ProductFilters\ProductCategoryFilter.cs" />
+    <Compile Include="ProductFilters\ProductAttributeValueFilter.cs" />
+    <Compile Include="ProductFilters\IProductFilter.cs" />
     <Compile Include="ProductImageService.cs" />
     <Compile Include="ProductService.cs" />
+    <Compile Include="ProductSorter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReviewService.cs" />
     <Compile Include="SupplierService.cs" />
@@ -83,5 +92,6 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace GameStore.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CustomerController : Controller
     {
         private readonly IOrderService _orderService;

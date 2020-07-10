@@ -13,6 +13,8 @@ namespace GameStore.Service
 
         IEnumerable<ValidationResult> CanAddAttribute(Attribute newAttribute);
 
+        List<Attribute> GetAttributesForFiltering(int categoryId);
+
         void CreateAttribute(Attribute attribute);
 
         void UpdateAttribute(Attribute attribute);

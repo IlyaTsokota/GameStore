@@ -1,24 +1,74 @@
-﻿
-@model GameStore.Web.ViewModels.ProductViewModels.IndexProductViewModel
+﻿@using GameStore.Service.Enums
+@model GameStore.Web.ViewModels.ProductViewModels.CategoryProductsViewModel
 @{
-    ViewBag.Title = "Товары";
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var count = 0;
 }
-@using (Ajax.BeginForm("GetProducts", new AjaxOptions { UpdateTargetId = "products" }))
-{
-    <div class="container">
+<div class="container">
+    @using (Ajax.BeginForm("GetProducts", "Products", null, new AjaxOptions { UpdateTargetId = "products" }, new { id = "productFormFilter" }))
+    {
         <div class="row">
-            <div class="col-md-4">
-                @Html.Partial("_FiltersProduct", Model)
-            </div>
-            <div class="col-md-8">
+
+            <div class="col mt-3">
+                <div class="row header align-items-center">
+                    <p class="col m-0">@Model.Name</p>
+                    @Html.DropDownListFor(x => x.ProductFilterViewModel.OrderBy, EnumHelper.GetSelectList(typeof(ProductOrderBy)), new { @class = "form-control form-control-sm col-sm-6 col-lg-4 my-0 py-0 ", id = "ajaxSelectSubmit" })
+                </div>
                 <div id="products">
-                    @Html.Partial("_Products", Model)
+                    @Html.Partial("_Products", Model.Products)
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 col-md-3">
+
+                @Html.HiddenFor(x => x.ProductFilterViewModel.CategoryId)
+
+                <div class="mb-1">
+                    <p class="header py-3">Фильтр</p>
+                    <span class="catalog-filter-title">Цена:</span>
+                    <div class="row mx-0">
+
+                        @Html.EditorFor(x => x.ProductFilterViewModel.MinPrice, new { htmlAttributes = new { @class = "form-control col-12 col-xl-4 my-1 px-0 text-center", id = "MinPrice", type = "number", Value = Model.ProductFilterViewModel.MinPrice, min = "0", maxlength = 7 } })
+                        @Html.EditorFor(x => x.ProductFilterViewModel.MaxPrice, new { htmlAttributes = new { @class = "form-control col-12 col-xl-4 offset-xl-1 my-1 px-0 text-center", id = "MaxPrice", type = "number", Value = Model.ProductFilterViewModel.MaxPrice, min = "0", maxlength = 7 } })
+                        <input class="btn btn-primary col-12 col-xl-2 px-lg-1 offset-xl-1 my-1" type="submit" value="OK" />
+                    </div>
+                </div>
+                <div class="mb-1 list-group">
+                    @foreach (var attribute in Model.Attributes)
+                    {
+                        <a href="#submenu@(attribute.AttributeId)" data-toggle="collapse" aria-expanded="false" class="bg-light list-group-item list-group-item-action px-3">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <span class="menu-collapsed">@attribute.Name</span>
+                                <i class="fas fa-angle-down"></i>
+                            </div>
+                        </a>
+                        foreach (var attributeValue in attribute.AttributeValues)
+                        {
+                            <div id='submenu@(attribute.AttributeId)' class="collapse">
+                                <a href="#" class="list-group-item list-group-item-action px-3 py-2">
+                                    <input name="ProductFilterViewModel.CheckedAttributes[@count].AttributeId" value="@attributeValue.AttributeId" hidden />
+                                    <label class="checkbox-label m-0 w-100">
+                                        <input type="checkbox" name="ProductFilterViewModel.CheckedAttributes[@count].Value" value="@attributeValue.Value" />
+                                        <span></span> @attributeValue.Value
+                                        @{
+                                            count++;
+                                        }
+                                    </label>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+
+                <div class="row mx-0">
+                    <input class="btn btn-primary col-12 col-lg-5 my-1" type="submit" value="Найти" />
+                    <input class="btn btn-secondary col-12  col-lg-5 offset-lg-2 my-1 text-center px-0 refresh" type="submit" value="Сбросить" />
                 </div>
             </div>
         </div>
-    </div>
-}
+    }
+</div>
+
 <div id='dialogDiv' class='modal fade' tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -26,3 +76,10 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        document.querySelector(".refresh").addEventListener("click", () => {
+            location.href = location.href;
+        });
+    </script>
+}

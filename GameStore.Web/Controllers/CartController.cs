@@ -37,7 +37,7 @@ namespace GameStore.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var cartLines = _cartService.GetCartLines(userId);
-            var totalValue = _cartService.GetTotalValue();
+            var totalValue = _cartService.GetTotalValue(userId);
             var cartItems = cartLines.Select(Mapper.Map<CartLine, CartViewModel>).ToList();
             var model = new IndexCartViewModel
             {
@@ -119,16 +119,17 @@ namespace GameStore.Web.Controllers
         {
 
             double total;
+            var userId = User.Identity.GetUserId();
             try
             {
-                total = _cartService.GetTotalValue();
+                total = _cartService.GetTotalValue(userId);
             }
             catch (Exception)
             {
                 total = 0;
             }
 
-            return Json(new { d = total.ToString("# грн") }, JsonRequestBehavior.AllowGet);
+            return Json(new { d = total.ToString() }, JsonRequestBehavior.AllowGet);
         }
     }
 }

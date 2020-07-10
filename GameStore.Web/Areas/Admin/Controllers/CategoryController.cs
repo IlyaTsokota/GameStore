@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace GameStore.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;

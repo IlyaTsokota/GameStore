@@ -99,7 +99,7 @@
     background: #ccc;
 }
 
-    .header-bottom-wrapper  .nav-tabs .nav-link.active {
+    .header-bottom-wrapper .nav-tabs .nav-link.active {
         color: #495057;
         background-color: #007bff !important;
         border-color: transparent !important;
@@ -127,8 +127,9 @@
 }
 
 .img-product {
-    height: 250px;
+    height: 300px;
     width: 300px;
+    object-fit: cover;
 }
 
 .bg-gray {
@@ -231,6 +232,7 @@
     text-align: center;
     margin: 0 auto;
     background: white;
+    min-height: 450px;
 }
 
 .product-image {
@@ -503,7 +505,7 @@ body {
 
 
 .img-slider {
-    width:100px;
+    width: 100px;
     color: #3498db;
     font-size: 36px;
     line-height: 100px;
@@ -525,7 +527,8 @@ body {
     .slider-nav .slick-dots {
         padding-right: 130px;
     }
-.img-main-slider{
+
+.img-main-slider {
     height: 250px;
 }
 

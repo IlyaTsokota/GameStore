@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace GameStore.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class AttributeValueController : Controller
     {
         // GET: Admin/AttributeValue
@@ -70,7 +71,7 @@ namespace GameStore.Web.Areas.Admin.Controllers
             _attributeValueService.EditAttributeValues(attributeValues);
             Logger.Log.Info($"{User.Identity.Name} изменил характеристики товара №{model.First().ProductId}");
             var productId = attributeValues[0].ProductId;
-            return RedirectToAction("Index", "Product", new { Area = string.Empty, id = productId });
+            return RedirectToAction("Details", "Products", new { Area = string.Empty, id = productId });
         }
     }
 }

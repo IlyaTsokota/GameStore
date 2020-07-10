@@ -1,17 +1,27 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Контакты";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<div class="container">
+    <div class="row justify-content-center m-3">
+        <div class="col-auto"><h2 class="text-uppercase mb-4 font-weight-bold text-center">@ViewBag.Title</h2></div>
+        <div class="w-100"></div>
+        <div class="col-auto ">
+            <p>
+                <i class="fa fa-home mr-3"></i> Харьков, NY 10012, UK
+            </p>
+            <p>
+                <i class="fa fa-envelope mr-3"></i> gamestore@gmail.com
+            </p>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+        </div>
+        <div class="col-auto ">
+            <p>
+                <i class="fa fa-phone mr-3"></i> + 380 099 2560 048
+            </p>
+            <p>
+                <i class="fa fa-print mr-3"></i> + 380 068 2560 048
+            </p>
+        </div>
+    </div>
+</div>

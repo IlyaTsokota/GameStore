@@ -22,13 +22,18 @@ namespace GameStore.Service
             _unitOfWork = unitOfWork;
         }
 
-        public void AddWishList(Product product, string userId)
+        public void AddWishList(Product product, string userId, out int result)
         {
-            var wish = _wishRepository.Get(x => x.ProductId == product.ProductId);
+            var wish = _wishRepository.Get(x => x.ProductId == product.ProductId && x.UserId == userId);
             if (wish == null)
             {
                 _wishRepository.Add(new Wish { Product = product, UserId = userId });
                 _unitOfWork.Commit();
+                result = 0;
+            }
+            else
+            {
+                result = 1;
             }
 
         }

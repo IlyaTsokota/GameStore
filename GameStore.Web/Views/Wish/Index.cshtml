@@ -6,11 +6,11 @@
 <div class="container">
     <div class="row">
         <div class="col-12 bg-light radius mt-5 mb-3">
-            @if (Model == null)
+            @if (Model.Count == 0)
             {
                 <h2 class="text-center">Список желаний пуст!</h2>
-                <div class="text-right mb-3">
-                    <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
+                <div class="text-center mb-3">
+                    <a class="btn btn-primary" href="@Url.Action("Index", "Home")">Продолжить покупки</a>
                 </div>
             }
             else
@@ -35,11 +35,9 @@
                     </tbody>
 
                 </table>
+                <a class="btn btn-link text-left mb-3" href="@Url.Action("Clear", "Wish")">Очистить список</a>
                 <div class="text-right mb-3">
-
-
-                    <a class="btn btn-danger" href="@Url.Action("Clear", "Wish")">Очистить список желаний</a>
-                    <a class="btn btn-primary" href="@Url.Action("Index", "Products")">Продолжить покупки</a>
+                    <a class="btn btn-primary" href="@Url.Action("Products", "Products")">Продолжить покупки</a>
                 </div>
             }
 

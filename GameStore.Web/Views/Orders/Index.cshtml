@@ -1,0 +1,69 @@
+﻿@model GameStore.Web.Models.PagerViewModel<GameStore.Web.ViewModels.OrderViewModels.OrderViewModel>
+
+@{
+    ViewBag.Title = "Мои заказы";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 bg-my">
+            <h2>@ViewBag.Title</h2>
+
+            @if (Model.Entities.Count != 0)
+            {
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                №
+                            </th>
+                            <th>
+                                ФИО
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Entities[0].Phone)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Entities[0].OrderDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Entities[0].OrderStatus)
+                            </th>
+                            <th>Действие</th>
+                        </tr>
+
+                        @foreach (var item in Model.Entities)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderId)
+                                </td>
+                                <td>
+                                    @item.MiddleName @item.FirstName @item.LastName
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Phone)
+                                </td>
+                                <td>
+                                    @item.OrderDate.ToString("dd.MM.yyyy HH:mm")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderStatus)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Подробности", "Details", new { id = item.OrderId }, new { @class = "btn btn-info" })
+                                </td>
+                            </tr>
+                        }
+
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p class="text-center">Заказов нет</p>
+            }
+        </div>
+    </div>
+</div>

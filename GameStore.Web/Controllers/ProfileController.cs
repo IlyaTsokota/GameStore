@@ -7,16 +7,14 @@ using GameStore.Web.Extensions;
 using GameStore.Web.ViewModels;
 using GameStore.Web.ViewModels.ProfileViewModels;
 using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace GameStore.Web.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private readonly IOrderService _orderService;

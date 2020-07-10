@@ -101,16 +101,19 @@ namespace GameStore.Service
 
         public void CancelOrder(Order order)
         {
-            order.OrderStatusId = 5; // Order canceled
-            _orderRepository.Update(order);
+
 
             // Return reserved products to the stock
-            foreach (var orderDetail in order.OrderDetails)
+            if (order.OrderStatusId > 1)
             {
-                orderDetail.Product.Quantity += orderDetail.Quantity;
-                _productRepository.Update(orderDetail.Product);
+                foreach (var orderDetail in order.OrderDetails)
+                {
+                    orderDetail.Product.Quantity += orderDetail.Quantity;
+                    _productRepository.Update(orderDetail.Product);
+                }
             }
-
+            order.OrderStatusId = 5; // Order canceled
+            _orderRepository.Update(order);
             _unitOfWork.Commit();
         }
 

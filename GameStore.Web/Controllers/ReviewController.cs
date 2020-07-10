@@ -54,7 +54,7 @@ namespace GameStore.Web.Controllers
                 review.ReviewDate = DateTime.Now;
                 _reviewService.CreateReview(review);
                 Logger.Log.Info($"{User.Identity.Name} оставил комментарий к товару {model.ProductId}. Содержание комментария: \"{model.Text}\"");
-                return RedirectToAction("Index", "Product", new { id = model.ProductId });
+                return RedirectToAction("Derails", "Products", new { id = model.ProductId });
             }
 
             // POST: /Review/Delete

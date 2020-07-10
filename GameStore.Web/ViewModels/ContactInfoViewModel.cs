@@ -37,7 +37,7 @@ namespace GameStore.Web.ViewModels
 
 
         [Required(ErrorMessage = "Поле не должно быть пустым")]
-        [Display(Name = "Электронный адре")]
+        [Display(Name = "Электронный адрес")]
         [EmailAddress(ErrorMessage = "Введенные данные не являются електронной почтой")]
         [MaxLength(100, ErrorMessage = "Длина {0} не может быть больше {1} символов")]
         public string Email { get; set; }

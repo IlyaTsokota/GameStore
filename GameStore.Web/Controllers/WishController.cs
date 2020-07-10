@@ -37,29 +37,38 @@ namespace GameStore.Web.Controllers
         {
             var product = _productService.GeProduct(productId);
             var userId = User.Identity.GetUserId();
+            int result;
             if (product != null)
             {
-                _wishService.AddWishList(product, userId);
+                _wishService.AddWishList(product, userId, out result);
             }
             else
             {
                 return RedirectToAction("NotFound", "Error");
             }
-            return PartialView("_WishNotification");
+            switch (result)
+            {
+                case 0:
+                    return PartialView("_WishNotification");
+                case 1:
+                    return PartialView("_WishNotificationFailure");
+                default:
+                    return PartialView("_WishNotification");
+            }
         }
 
         public ActionResult Delete(int wishId)
         {
             var wish = _wishService.GetWish(wishId);
             _wishService.Delete(wish);
-            return View("Index");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Clear()
         {
             var userId = User.Identity.GetUserId();
             _wishService.Clear(userId);
-            return View("Index");
+            return RedirectToAction("Index");
         }
     }
 }

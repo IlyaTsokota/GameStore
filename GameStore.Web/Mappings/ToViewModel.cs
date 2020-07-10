@@ -2,7 +2,6 @@
 using GameStore.Model;
 using GameStore.Web.ViewModels;
 using GameStore.Web.ViewModels.CartViewModels;
-using GameStore.Web.ViewModels.CategoryViewModels;
 using GameStore.Web.ViewModels.OrderViewModels;
 using GameStore.Web.ViewModels.ProductViewModels;
 using GameStore.Web.ViewModels.ProfileViewModels;

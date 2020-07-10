@@ -1,0 +1,11 @@
+﻿@model List<GameStore.Web.ViewModels.ProductViewModels.CategoryViewModel>
+
+
+<ul class="nav">
+    @foreach (var item in Model)
+    {
+        <li class="nav-item">@Html.ActionLink(item.Name, "Products", "Products", new { id = item.CategoryId }, htmlAttributes: new { @class = "nav-link" })</li>
+    }
+
+
+</ul>

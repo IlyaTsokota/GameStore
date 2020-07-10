@@ -23,7 +23,7 @@ namespace GameStore.Service
 
         public void AddItem(Product product, int quantity, string userId)
         {
-            var cartLine = _cartRepository.Get(x => x.ProductId == product.ProductId);
+            var cartLine = _cartRepository.Get(x => x.ProductId == product.ProductId && x.UserId == userId);
             if (cartLine == null)
             {
                 _cartRepository.Add(new CartLine { Product = product, Quantity = quantity, UserId = userId });
@@ -52,9 +52,9 @@ namespace GameStore.Service
             return cartLines.ToList();
         }
 
-        public double GetTotalValue()
+        public double GetTotalValue(string userId)
         {
-            var total = _cartRepository.GetAll().Select(x => x.Product.Price * x.Quantity).Sum();
+            var total = _cartRepository.GetMany(x=>x.UserId == userId).Select(x => x.Product.Price * x.Quantity).Sum();
             return total;
         }
 

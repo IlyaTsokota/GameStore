@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace GameStore.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class SupplierController : Controller
     {
         private readonly ISupplierService _supplierService;

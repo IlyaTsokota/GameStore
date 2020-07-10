@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace GameStore.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class LogController : Controller
     {
         private readonly ILogService _logService;

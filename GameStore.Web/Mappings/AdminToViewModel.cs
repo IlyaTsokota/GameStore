@@ -47,14 +47,14 @@ namespace GameStore.Web.Mappings
                 opt => opt.MapFrom(p => p.SupplyProducts.Select(Mapper.Map<SupplyProduct, SupplyProductViewModel>).ToList()));
             CreateMap<Order, OrderViewModel>().ForMember(
                     m => m.FullName,
-                    opt => opt.MapFrom(src => $"{src.LastName} {src.FirstName[0]}.{src.MiddleName[0]}."));
+                    opt => opt.MapFrom(src => $"{src.MiddleName} {src.FirstName[0]}.{src.LastName[0]}."));
             CreateMap<Order, DetailsOrderViewModel>()
                 .ForMember(
                     m => m.FullName,
                     opt => opt.MapFrom(src => $"{src.MiddleName} {src.FirstName} {src.LastName}")).ForMember(
                     m => m.Manager,
                     opt => opt.MapFrom(
-                        src => $"{src.Manager.MiddleName} {src.Manager.FirstName[0]}{src.Manager.LastName[0]}."))
+                        src => $"{src.Manager.MiddleName} {src.Manager.FirstName[0]}.{src.Manager.LastName[0]}."))
                 .ForMember(
                     m => m.OrderDetails,
                     opt => opt.MapFrom(

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace GameStore.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin,Manager")]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;

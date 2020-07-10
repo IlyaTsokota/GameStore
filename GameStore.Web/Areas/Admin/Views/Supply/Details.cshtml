@@ -41,7 +41,7 @@
         @foreach (var supplyProduct in Model.SupplyProductViewModels)
         {
     <tr>
-        <td>@Html.ActionLink(supplyProduct.Name, "Index", "Product", new { Area = string.Empty, id = supplyProduct.ProductId }, new { })</td>
+        <td>@Html.ActionLink(supplyProduct.Name, "Index", "Products", new { Area = string.Empty, id = supplyProduct.ProductId }, new { })</td>
 
         <td>@supplyProduct.Quantity</td>
         <td class="text-right">@supplyProduct.Price</td>

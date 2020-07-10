@@ -11,7 +11,7 @@ namespace GameStore.Service
     {
         List<Wish> GetWishes(string userId);
 
-        void AddWishList(Product product, string userId);
+        void AddWishList(Product product, string userId, out int result);
 
         void Delete(Wish wish);
 

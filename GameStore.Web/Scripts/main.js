@@ -101,7 +101,7 @@ function UpdateTotalPrice() {
         url: "Cart/UpdateTotal",
         contentType: "application/json; charset=utf-8",
         success: function (msg) {
-            if (msg.d == "$0.00") {
+            if (msg.d == "0") {
                 location.reload();
                 return;
             }
@@ -110,6 +110,12 @@ function UpdateTotalPrice() {
         }
     })
 }
+$("#ajaxSelectSubmit").change(function () {
+    $(this.form).submit();
+});
+
+
+
 
 function Change(el, type, pid) {
     var data = {
@@ -184,21 +190,65 @@ $('#reviews-tab').click(function () {
     });
 });
 
-$("#createOrder").submit(function () {
-    event.preventDefault();
-    var form = $(this);
-    if (!form.valid()) {
-        return;
-    }
-    var url = form.attr('action');
-    $.post(url, form.serialize()).done(function (result) {
-        if (!result.success) {
-            displayValidationErrors(result.errors);
-            return;
-        }
+//$("#createOrder").submit(function () {
+//    event.preventDefault();
+//    var form = $(this);
+//    if (!form.valid()) {
+//        return;
+//    }
+//    var url = form.attr('action');
+//    $.post(url, form.serialize()).done(function (result) {
+//        if (!result.success) {
+//            displayValidationErrors(result.errors);
+//            return;
+//        }
         
-        window.location.href = result.returnUrl;
-    }).fail(function () {
-        alert("fail");
+//        window.location.href = result.returnUrl;
+//    }).fail(function () {
+//        alert("fail");
+//    });
+//});
+$(document).ready(function ($) {
+    var stars = $('.rate');
+    var rate = 10;
+    stars.on('mouseover',
+        function () {
+            var index = $(this).attr('data-index');
+            markStarsAsActive(index);
+        });
+    stars.on('mouseout',
+        function () {
+            markStarsAsActive(rate);
+        });
+
+
+    function markStarsAsActive(index) {
+        unmarkActive();
+        for (var i = 0; i < index; i++) {
+            $(stars.get(i)).addClass('gold');
+        }
+    }
+
+    function unmarkActive() {
+        stars.removeClass('gold');
+    }
+
+    stars.on('click',
+        function () {
+            rate = $(this).attr('data-index');
+            markStarsAsActive(rate);
+            $("#reviewRating").val(rate);
+        });
+});
+
+$('#reviews-tab').click(function () {
+    var productId = $('#ProductId').val();
+    $.ajax({
+        url: "/Review/GetReviews",
+        type: "GET",
+        data: { productId: productId },
+        success: function (result) {
+            $('#productReviews').html(result);
+        }
     });
 });

@@ -1,12 +1,12 @@
-﻿@model GameStore.Web.ViewModels.ProductViewModels.IndexProductViewModel
+﻿@model GameStore.Web.Models.PagerViewModel<GameStore.Web.ViewModels.ProductViewModels.ProductViewModel>
+
 @using GameStore.Web.Helpers
-
 <div class="row mt-5">
-    @foreach (var item in Model.Products)
+    @foreach (var item in Model.Entities)
     {
-        <div class="col-12 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto">
+        <div class="col-12 col-sm-8 col-md-6 col-lg-4 mr-auto ml-auto mt-2">
 
-            <div class="product-wrap bg-light">
+            <div class="product-wrap radius bg-light">
                 <div class="product-image">
                     <a href="@Url.Action("Details", "Products",  new { id = item.ProductId })">
                         <img class=" img-product" src="data:image/jpeg;base64, @Convert.ToBase64String(item.Images.FirstOrDefault().Image)" alt="@item.Name">
@@ -15,7 +15,7 @@
                     <a class="detail-link" href="@Url.Action("Details", "Products",  new { id = item.ProductId })" title="Быстрый просмотр"></a>
                     <div class="actions">
                         <div class="actions-btn">
-                            <a class="add-to-cart btnCreate" href="@Url.Action("AddToCart", "Cart", new { productId = item.ProductId })"  title="Добавить в корзину"></a>
+                            <a class="add-to-cart btnCreate" href="@Url.Action("AddToCart", "Cart", new { productId = item.ProductId })" title="Добавить в корзину"></a>
                             <a class="add-to-wishlist btnCreate" href="@Url.Action("AddToWish", "Wish", new { productId = item.ProductId })" title="Добавить в мои желания"></a>
                         </div>
                     </div>
@@ -24,19 +24,16 @@
                     <h3>
                         @item.Name
                     </h3>
-                    @if (item.OldPrice != 0 )
+                    @if (item.OldPrice != 0)
                     {
                         <div class="old-price text-danger" style="text-decoration:line-through">@item.OldPrice.ToString("# грн")</div>
                     }
                     <div class="price">@item.Price.ToString("# грн")</div>
-                   
+
                 </div>
             </div>
 
         </div>
     }
-</div>
 
-<div>
-    @Html.PaginationAjax(Model.Pager)
 </div>

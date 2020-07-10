@@ -44,15 +44,15 @@
     <div class="row">
         @if (Model.PlaystationList.Count() != 0)
         {
-            <div class="col-12">
-                <h4>Playstation</h4>
+            <div class="col-12 mt-2">
+                <h4 class="w-100 bg-primary radius text-white p-2">Playstation</h4>
                 @Html.Partial("_ProductsSlider", Model.PlaystationList)
             </div>
         }
         @if (Model.XboxList.Count() != 0)
         {
             <div class="col-12">
-                <h4>Xbox</h4>
+                <h4 class="w-100 bg-success radius text-white p-2" >Xbox</h4>
                 @Html.Partial("_ProductsSlider", Model.XboxList)
             </div>
 
@@ -60,10 +60,17 @@
         @if (Model.AllProducts.Count() != 0)
         {
             <div class="col-12">
-                <h4>Все товары</h4>
+                <h4 class="w-100 bg-dark radius text-white p-2">Все товары</h4>
                 @Html.Partial("_ProductsSlider", Model.AllProducts)
             </div>
 
         }
+    </div>
+</div>
+<div id='dialogDiv' class='modal fade' tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='dialogContent'></div>
+        </div>
     </div>
 </div>

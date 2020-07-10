@@ -11,7 +11,7 @@ namespace GameStore.Service
 
         void RemoveLine(int id);
 
-        double GetTotalValue();
+        double GetTotalValue(string userId);
 
         void Clear(string userId);
 

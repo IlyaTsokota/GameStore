@@ -14,10 +14,13 @@ namespace GameStore.Web.Controllers
     public class HomeController : Controller
     {
         private readonly IProductService _productService;
-        public HomeController(IProductService productService)
+        private readonly ICategoryService _categoryService;
+        public HomeController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
+        [Authorize]
         public ActionResult Index()
         {
             var products = _productService.GetProducts().Select(Mapper.Map<Product, ProductViewModel>);
@@ -33,17 +36,30 @@ namespace GameStore.Web.Controllers
             return View(model);
         }
 
+        public ActionResult GetCategories(string name)
+        {
+            var categories = _categoryService.GetCategories();
+            categories = categories.Where(x => x.Name.Contains(name)).ToList();
+            var model = categories.Select(Mapper.Map<Category, CategoryViewModel>).ToList();
+            return PartialView("_Categories", model);
+        }
+
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        public ActionResult Warranty()
+        {
+            return View();
+        }
+        public ActionResult PaymentDeliveryInfo()
+        {
             return View();
         }
     }

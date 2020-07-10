@@ -2,6 +2,7 @@
 using GameStore.Data.Identity;
 using GameStore.Model;
 using GameStore.Service;
+using GameStore.Web.ViewModels;
 using GameStore.Web.ViewModels.CartViewModels;
 using GameStore.Web.ViewModels.LiqPay;
 using GameStore.Web.ViewModels.OrderViewModels;
@@ -24,14 +25,22 @@ namespace GameStore.Web.Controllers
         private readonly IProductService _productService;
         private readonly ICartService _cartService;
         private readonly ApplicationUserManager _userManager;
-        public OrdersController(IOrderService orderService, ICartService cartService, ApplicationUserManager userManager, IProductService productService)
+        private readonly ApplicationRoleManager _roleManager;
+        public OrdersController(IOrderService orderService, ICartService cartService, ApplicationUserManager userManager, IProductService productService, ApplicationRoleManager roleManager)
         {
             _orderService = orderService;
             _cartService = cartService;
             _userManager = userManager;
             _productService = productService;
+            _roleManager = roleManager;
         }
-
+        public ActionResult Index()
+        {
+            var customerId = User.Identity.GetUserId();
+            var orders = _orderService.GetOrders(customerId: customerId);
+            var model = PagerViewModelHelper<OrderViewModel>.ToPagerViewModel(orders);
+            return View(model);
+        }
 
         public ActionResult Details(int id)
         {
@@ -64,33 +73,25 @@ namespace GameStore.Web.Controllers
         public async Task<ActionResult> Create()
         {
             var userId = User.Identity.GetUserId();
-            var cartItems = _cartService.GetCartLines(userId);
-            var mappCartItems = cartItems.Select(Mapper.Map<CartLine, CartViewModel>).ToList();
             var user = await _userManager.FindByIdAsync(userId).ConfigureAwait(false);
             var model = Mapper.Map<User, CreateOrderViewModel>(user);
-            model.CartItems = mappCartItems;
             return View(model);
         }
         [HttpPost]
-        public ActionResult Create(CreateOrderViewModel model)
+        public async Task<ActionResult> Create(CreateOrderViewModel model)
         {
-
-            if (model.CartItems.Count == 0 || model.CartItems.All(x => x.Quantity== 0))
-            {
-                ModelState.AddModelError(string.Empty, @"Корзина пуста!");
-            }
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
+            var userId = User.Identity.GetUserId();
+            var cartItems = _cartService.GetCartLines(userId);
             var order = Mapper.Map<CreateOrderViewModel, Order>(model);
             order.OrderDate = DateTime.Now;
             order.AcceptedDate = DateTime.Now;
             order.OrderStatusId = 1;
-            order.CustomerId = User.Identity.GetUserId();
-            var orderedProducts = model.CartItems.Where(x => x.Quantity != 0)
+            order.CustomerId = userId;
+            var orderedProducts = cartItems.Where(x => x.Quantity != 0)
                 .Select(x => new { product = _productService.GeProduct(x.ProductId), x.Quantity });
             var orderDetails = orderedProducts.Select(x => new OrderDetails
             {
@@ -100,14 +101,24 @@ namespace GameStore.Web.Controllers
             }).ToList();
             order.OrderDetails = orderDetails;
             _orderService.CreateOrder(order);
-            var userId = User.Identity.GetUserId();
             _cartService.Clear(userId);
+
+            await _userManager.SendEmailAsync(userId, "Заказ принят в обработку", $"Ваш заказ был принят в обработку, ожидайте пока с вами свяжется менеджер!").ConfigureAwait(false);
+
+            var role = await _roleManager.FindByNameAsync("Manager").ConfigureAwait(false);
+            var managersId = role.Users.Select(x => x.UserId);
+            var managers = managersId.Select(x => _userManager.FindById(x)).ToList();
+            var callbackUrl = Url.Action("Details", "Order", new { area = "Admin", id = order.OrderId }, protocol: Request.Url.Scheme);
+            foreach (var item in managers)
+            {
+                await _userManager.SendEmailAsync(item.Id, $"На сайте появился новый заказ № {order.OrderId}", $"Перейдите для принятия этого заказа  <a href=\"" + callbackUrl + "\">здесь</a>").ConfigureAwait(false);
+            }
             Logger.Log.Info($"На сайте появился заказ №{order.OrderId}");
             return RedirectToAction("Details", new { id = order.OrderId });
         }
 
         [HttpPost]
-        public ActionResult PayResult()
+        public async Task<ActionResult> PayResult()
         {
             var requestDictionary = Request.Form.AllKeys.ToDictionary(key => key, key => Request.Form[key]);
 
@@ -137,6 +148,18 @@ namespace GameStore.Web.Controllers
 
             _orderService.OrderPaid(order);
             Logger.Log.Info($"{User.Identity.Name} оплатил заказ №{orderId} через LiqPay");
+
+            var userId = User.Identity.GetUserId();
+            await _userManager.SendEmailAsync(userId, "Вы оплатили заказ", $"Ваш заказ №{order.OrderId} был оплачен, ждите пока вам вышлют товар").ConfigureAwait(false);
+
+            var role = await _roleManager.FindByNameAsync("Manager").ConfigureAwait(false);
+            var managersId = role.Users.Select(x => x.UserId);
+            var managers = managersId.Select(x => _userManager.FindById(x)).ToList();
+            var callbackUrl = Url.Action("Details", "Order", new { area = "Admin", id = order.OrderId }, protocol: Request.Url.Scheme);
+            foreach (var item in managers)
+            {
+                await _userManager.SendEmailAsync(item.Id, $"Заказ № {order.OrderId} был оплачен и ожидает отправки", $"Перейдите для отправки этого заказа  <a href=\"" + callbackUrl + "\">здесь</a>").ConfigureAwait(false);
+            }
             return View("PayResultSuccess");
         }
 

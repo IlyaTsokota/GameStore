@@ -4,6 +4,7 @@ using System.Linq;
 using GameStore.Data.Infrastructure;
 using GameStore.Data.Repositories;
 using System.ComponentModel.DataAnnotations;
+using GameStore.Service.ProductFilters;
 
 namespace GameStore.Service
 {
@@ -34,7 +35,7 @@ namespace GameStore.Service
             {
                 yield return new ValidationResult("Товар с данным названием уже существует!");
             }
-            if (newProduct.OldPrice >= 0 && newProduct.OldPrice <= newProduct.Price)
+            if (newProduct.OldPrice != 0 && newProduct.OldPrice <= newProduct.Price)
             {
                 yield return new ValidationResult("Старая цена не может быть меньше новой!");
             }
@@ -65,6 +66,28 @@ namespace GameStore.Service
             _productRepository.Update(product);
             _unitOfWork.Commit();
         }
+        public List<Product> GetProductsForCustomer(IProductSorter productSorter, List<IProductFilter> productFilters = null)
+        {
+            productFilters = productFilters == null
+                                 ? ProductFilterList.RequiredFiltersForCustomer()
+                                 : productFilters.Union(ProductFilterList.RequiredFiltersForCustomer()).ToList();
+
+            var products = ApplyFilters(productFilters, productSorter);
+            return SortByAvailability(products);
+        }
+
+        public List<Product> GetProductsForAdmin(
+            IProductSorter productSorter,
+            List<IProductFilter> productFilters = null)
+        {
+            if (productFilters == null)
+            {
+                productFilters = ProductFilterList.BaseFiltersForAdmin();
+            }
+
+            var products = ApplyFilters(productFilters, productSorter);
+            return products.ToList();
+        }
 
         public Product GeProduct(int id) => _productRepository.GetById(id);
 
@@ -85,9 +108,23 @@ namespace GameStore.Service
             var products = _productRepository.GetMany(x => !x.IsDeleted);
             if (!string.IsNullOrEmpty(search))
                 products = products.Where(x => x.Name.Contains(search));
-            if (!string.IsNullOrEmpty(search))
+            if (!string.IsNullOrEmpty(category))
                 products = products.Where(x => x.Category.Name == category);
             return products.ToList();
         }
+
+        private static List<Product> SortByAvailability(IEnumerable<Product> products)
+        {
+            return products.OrderByDescending(x => x.Quantity > 0 ? 1 : 0).ToList();
+        }
+
+        private IEnumerable<Product> ApplyFilters(IEnumerable<IProductFilter> productFilters, IProductSorter productSorter)
+        {
+            var products = _productRepository.GetAll();
+            products = productFilters.Aggregate(products, (current, productFilter) => productFilter.GetEntities(current));
+            var sortedProducts = productSorter.Sort(products);
+            return sortedProducts;
+        }
+
     }
 }
